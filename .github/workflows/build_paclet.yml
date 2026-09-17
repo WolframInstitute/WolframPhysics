@@ -1,0 +1,241 @@
+name: Build Paclet
+
+# Every push to main and every pull request against it gets the check job on the hosted runner:
+# the python gates over the tree, then lint, tests, the doc examples, the documentation build and
+# the packed .paclet archive inside the Wolfram container, with the archive uploaded as the run's
+# artifact. A push to main (and a manual run) then builds and publishes on a Prime Intellect CPU
+# pod: hosted runners cap at 2-4 vCPUs, so scripts/prime_ci.sh provisions a 16-32 vCPU pod, runs
+# scripts/build_all.wls on it (build_notebooks -> docbuild -> publish -> build_site site), prints
+# the deployed URLs and always tears the pod down.
+# Secrets: see CONTRIBUTING.md "Deploying from CI" (scripts/sync_ci_secrets.sh pushes them).
+# Repository variable: WP_TEAM_ID, the Prime team whose wallet funds the pod (not a secret; set it
+# once with `gh variable set WP_TEAM_ID`); unset, the Prime CLI bills the API key's personal
+# account, and an unfunded one answers every pod create with "Payment required".
+# Ported from PureMath's .github/workflows/build_paclet.yml; the python gate steps follow
+# HypergraphRewritingEngine's ci.yml.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      vcpus:
+        description: "Minimum vCPUs for the build pod"
+        required: false
+        default: "16"
+
+permissions:
+  contents: read
+
+# Serialize runs on the same ref: a newer run queues behind an in-progress one rather than
+# cancelling it, so a publish (and its pod teardown) always finishes.
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  # The gate on the hosted runner: no pod, no publish. tools/dev/precommit_gates.sh runs the
+  # python gates and the lint locally; the tests, the doc examples and the documentation build
+  # need a kernel and run only here.
+  check:
+    name: Gates, lint & test
+    runs-on: ubuntu-latest
+    # NOT a `container:` job. With that syntax the image is pulled in "Initialize containers",
+    # BEFORE any step can run, and the hosted runner's free disk does not fit the 3.9 GB Wolfram
+    # image unpacked (failed to register layer: no space left on device). So the job frees the
+    # runner's preinstalled bloat first, then pulls and runs the same container by hand, with the
+    # same license pin the pod build uses (scripts/prime_ci.sh).
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # The documentation notebooks are not in git; this job builds them (see "Build the
+          # documentation notebooks"), and that build converts with the MarkdownToNotebook
+          # submodule. A shallow clone is fine: nothing here reads the history.
+          submodules: true
+
+      # A markdown page is written once and outlives the symbol it documents: nothing in the
+      # build notices that the paclet stopped exporting a symbol, so the page keeps converting
+      # and the paclet keeps shipping a call a user cannot make. Needs no build: it reads the
+      # Kernel sources' PackageExported declarations and the markdown under docs/en.
+      - name: The documentation names only symbols the paclet exports
+        run: python3 tools/dev/doc_symbols_check.py
+
+      # The root guide is an index of hyperlinks into the Function Repository, other paclets,
+      # GitHub and the web; a link into a page that does not exist converts and deploys like a
+      # good one. The Wolfram resource sites answer a missing resource with a redirect to a
+      # sign-in page, which the check treats as dead.
+      - name: Every web link the documentation carries serves a page
+        run: python3 tools/dev/doc_links_check.py
+
+      - name: Free runner disk space
+        run: |
+          df -h / | tail -1
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /usr/local/.ghcup \
+                      /opt/hostedtoolcache/CodeQL /usr/local/share/boost /usr/share/swift \
+                      /usr/local/share/powershell 2>/dev/null || true
+          sudo docker system prune -af >/dev/null 2>&1 || true
+          df -h / | tail -1
+
+      # Prefer the real mathpass (offline license, no on-demand throttle). It is registered to
+      # MathID 6536-73489-11225, which a container reaches by running with this fixed machine-id
+      # and hostname; both are the pin, and scripts/prime_ci.sh stages the same one. The values,
+      # the pm in them included, are the ones PureMath's CI mathpass was registered under:
+      # WP_MATHPASS_B64 must be that same mathpass, and changing the hostname or the machine-id
+      # needs a new mathpass. Without the secret, fall back to the on-demand entitlement.
+      - name: Stage license
+        env:
+          WP_MATHPASS_B64: ${{ secrets.WP_MATHPASS_B64 }}
+          ENT: ${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}
+        run: |
+          if [ -n "$WP_MATHPASS_B64" ]; then
+            printf 'd0c5a1b2e3f40000000000000000pmci\n' > /tmp/wp.mid
+            printf '%s' "$WP_MATHPASS_B64" | base64 -d > /tmp/wp.mathpass
+            echo "LICM=--hostname pmci -v /tmp/wp.mid:/etc/machine-id:ro -v /tmp/wp.mid:/var/lib/dbus/machine-id:ro -v /tmp/wp.mathpass:/usr/local/Wolfram/Wolfram/15.0/Configuration/Licensing/mathpass:ro" >> "$GITHUB_ENV"
+          else
+            echo "LICM=--hostname pmci -e WOLFRAMSCRIPT_ENTITLEMENTID=$ENT" >> "$GITHUB_ENV"
+          fi
+
+      - name: Pull image
+        run: docker pull -q wolframinstitute/wolfram:15.0
+
+      # QT_QPA_PLATFORM=offscreen: the headless front end the doc scripts drive needs a Qt
+      # platform that works with no display; without it the kernel aborts in the XCB plugin.
+      - name: Activate Wolfram Engine
+        run: |
+          docker run --rm --user root $LICM -e QT_QPA_PLATFORM=offscreen -v "$PWD:/repo" -w /repo \
+            wolframinstitute/wolfram:15.0 \
+            wolframscript -code 'Print["Activated: ", $LicenseType, " until ", $LicenseExpirationDate]; Quit[0]'
+
+      - name: Lint documentation sources
+        run: |
+          docker run --rm --user root $LICM -e QT_QPA_PLATFORM=offscreen -v "$PWD:/repo" -w /repo \
+            wolframinstitute/wolfram:15.0 wolframscript -f scripts/lint_docs.wls
+
+      - name: Run tests
+        run: |
+          docker run --rm --user root $LICM -e QT_QPA_PLATFORM=offscreen -v "$PWD:/repo" -w /repo \
+            wolframinstitute/wolfram:15.0 wolframscript -f scripts/run_tests.wls
+
+      # Every wl cell in the markdown sources, evaluated the way the built page evaluates it.
+      - name: Run documentation examples
+        run: |
+          docker run --rm --user root $LICM -e QT_QPA_PLATFORM=offscreen -v "$PWD:/repo" -w /repo \
+            wolframinstitute/wolfram:15.0 wolframscript -f scripts/run_doc_examples.wls
+
+      # The notebooks are build artifacts and are NOT in git, so a checkout has none and the
+      # archive below would otherwise carry no documentation. The licensed container can build
+      # them, so it does: docs/en and docs/ResourceDefinition.md -> WolframPhysics/Documentation
+      # and WolframPhysics/ResourceDefinition.nb, every example evaluated against this checkout.
+      # This is also the only place a pull request exercises the documentation build at all; the
+      # pod job below rebuilds the same notebooks, but only on a push to main.
+      - name: Build the documentation notebooks
+        run: |
+          docker run --rm --user root $LICM -e QT_QPA_PLATFORM=offscreen -v "$PWD:/repo" -w /repo \
+            wolframinstitute/wolfram:15.0 bash build_docs.sh
+          # the container writes as root; later steps and the cleanup run as the runner user
+          sudo chown -R "$(id -u):$(id -g)" WolframPhysics/Documentation WolframPhysics/ResourceDefinition.nb
+          find WolframPhysics/Documentation -name '*.nb' | sort
+
+      # The same gate again, now over the notebooks. The run at the top of the job saw a
+      # checkout with no notebooks in it, so only its markdown half did anything; the built
+      # tree is what the pack below ships, so the ORPHAN and DEAD LINK checks are run against
+      # it too. The early run stays where it is: it fails a bad source in seconds, before the
+      # image pull and the build.
+      - name: The shipped notebooks name only symbols the paclet exports
+        run: python3 tools/dev/doc_symbols_check.py
+
+      # The installable archive of WolframPhysics/ as it stands, kept as the run's artifact. It
+      # is packed AFTER the step above, because the notebooks it ships are build output that a
+      # checkout does not carry: packing first would upload a paclet with no documentation in it.
+      - name: Pack the paclet
+        run: |
+          docker run --rm --user root $LICM -e QT_QPA_PLATFORM=offscreen -v "$PWD:/repo" -w /repo \
+            wolframinstitute/wolfram:15.0 wolframscript -f scripts/build_paclet.wls
+          # the container writes as root; the upload runs as the runner user
+          sudo chown -R "$(id -u):$(id -g)" dist 2>/dev/null || true
+          ls -la dist/
+
+      - name: Upload the paclet
+        uses: actions/upload-artifact@v4
+        with:
+          name: wolframphysics-paclet
+          path: dist/*.paclet
+          if-no-files-found: error
+
+  # Build + publish on a Prime pod. Only on pushes to main and manual runs, after the check passes.
+  publish:
+    name: Build & publish (Prime pod)
+    needs: check
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    # Above scripts/prime_ci.sh's own pod-side build timeout (100 min), so the script's cleanup
+    # trap, not this limit, is what normally ends a wedged run.
+    timeout-minutes: 120
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # The pod builds from an rsync of this checkout; the converter submodule goes with it.
+          submodules: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install the Prime CLI
+        run: pip install --quiet prime
+
+      # One ssh session streams the whole build here; the script's EXIT and signal traps tear
+      # the pod down, verified, on every exit path. The deployed URLs land in the step summary.
+      - name: Provision pod and run the end-to-end build
+        env:
+          PRIME_API_KEY: ${{ secrets.PRIME_API_KEY }}
+          PRIME_SSH_KEY: ${{ secrets.PRIME_SSH_KEY }}
+          # Real mathpass (base64): licenses the pod containers offline, no entitlement needed.
+          # The entitlement stays as the fallback when the secret is absent.
+          WP_MATHPASS_B64: ${{ secrets.WP_MATHPASS_B64 }}
+          WOLFRAMSCRIPT_ENTITLEMENTID: ${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}
+          WOLFRAM_CLOUD_USER: ${{ secrets.WOLFRAM_CLOUD_USER }}
+          WOLFRAM_CLOUD_PASSWORD: ${{ secrets.WOLFRAM_CLOUD_PASSWORD }}
+          WP_VCPUS: ${{ github.event.inputs.vcpus || '16' }}
+          # The funded Prime wallet is on a team, not the personal account a fresh CI config
+          # defaults to; without the repository variable every pod create fails "Payment required".
+          WP_TEAM_ID: ${{ vars.WP_TEAM_ID }}
+        run: bash scripts/prime_ci.sh
+
+      # Backstop for the one case the in-script trap cannot cover: a SIGKILL (grace period
+      # exceeded) leaves no chance to run cleanup. Terminates every pod this run named, by the
+      # deterministic name prefix, so a killed build step still cannot leak one. Idempotent: a
+      # no-op when the trap already tore the pod down.
+      - name: Tear down pod (safety net)
+        if: always()
+        env:
+          PRIME_API_KEY: ${{ secrets.PRIME_API_KEY }}
+          WP_TEAM_ID: ${{ vars.WP_TEAM_ID }}
+        run: |
+          command -v prime >/dev/null 2>&1 || pip install --quiet prime
+          export PRIME_DISABLE_VERSION_CHECK=1
+          PREFIX="wp-ci-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}-"
+          prime config set-api-key "$PRIME_API_KEY" >/dev/null 2>&1 || true
+          [ -n "$WP_TEAM_ID" ] && { prime config set-team-id "$WP_TEAM_ID" >/dev/null 2>&1 || true; }
+          IDS="$(prime pods list --output json 2>/dev/null | PREFIX="$PREFIX" python3 -c 'import json,sys,os; d=json.load(sys.stdin); rows=d if isinstance(d,list) else d.get("pods",d.get("data",[])); print(" ".join(r["id"] for r in rows if str(r.get("name","")).startswith(os.environ["PREFIX"])))' 2>/dev/null || true)"
+          if [ -n "$IDS" ]; then
+            for ID in $IDS; do
+              echo "safety-net: terminating pod $ID ($PREFIX*)"
+              prime pods terminate "$ID" --yes >/dev/null 2>&1 || true
+            done
+          else
+            echo "safety-net: no pod named $PREFIX* (already torn down or never created)"
+          fi
+
+      - name: Upload build log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: prime-build-log
+          path: /tmp/prime_ci_build.log
+          if-no-files-found: ignore
