@@ -1,0 +1,55 @@
+# Build output. build/ holds the publishable copy scripts/docbuild.wls writes at
+# build/WolframPhysics (the paclet skeleton plus the DocumentationBuild pages that
+# scripts/publish.wls deploys) and the local site; dist/ holds the packed .paclet archive
+# scripts/build_paclet.wls writes.
+/build/
+/dist/
+*.paclet
+
+# Built documentation notebooks: BUILD ARTIFACTS, not tracked. WolframPhysics/Documentation/ (the
+# whole built tree: the notebooks under English/Guides, English/Tutorials and
+# English/ReferencePages/Symbols, the incremental-build manifest .doc_manifest.wl and the .build_ok
+# stamp beside them, and the SearchIndex, SpellIndex and Index directories the Documentation Center
+# writes there when it builds the pages in place) and WolframPhysics/ResourceDefinition.nb. They are
+# artifacts because scripts/build_notebooks.wls (wrapper: ./build_docs.sh) generates every one of
+# them from the markdown under docs/en and docs/ResourceDefinition.md, every publish rebuilds them,
+# and they are large machine-written notebooks whose diffs carry no review value. The markdown is
+# the source of truth; the notebooks are produced by scripts/build_notebooks.wls and consumed, after
+# a build, by scripts/docbuild.wls, scripts/publish.wls, scripts/build_site.wls and
+# scripts/build_paclet.wls, none of which runs on a tree the build has not written: docbuild and
+# build_paclet require every page to be present and current with docs/en (wpRequireBuiltDocs in
+# scripts/deploy_common.wls), and publish and build_site stop on the notebooks they do not find.
+# Ignored with them: the input-only notebooks of a structure build (./build_docs.sh structure)
+# under docs/en/.generated.
+/WolframPhysics/Documentation/
+/WolframPhysics/ResourceDefinition.nb
+/docs/en/.generated/
+
+# Python bytecode from the tools/dev gates
+__pycache__/
+*.pyc
+
+# Local secrets for CI and the Prime-orchestrated build (scripts/sync_ci_secrets.sh,
+# scripts/prime_ci.sh) - NEVER commit these
+/.env
+/.secrets
+/.mathpass
+
+# Claude Code local state: session worktrees and the optional .claude/skills -> ../.agent-skills
+# discovery symlink (the skills themselves are tracked in .agent-skills/)
+.claude/
+
+# macOS Finder metadata
+.DS_Store
+
+# Other agent harnesses' local state, and editor and scratch files
+.gemini/
+.agent/
+.agents/
+_agent/
+_agents/
+*.mx
+*.wl.bak
+*.tmp
+*.swp
+*~
