@@ -1,0 +1,155 @@
+/* Stylesheet of the single-page documentation browser assembled by scripts/build_site.wls.
+   Two columns under a fixed header: the page tree on the left, one iframe in the middle. The
+   framed page is a full Wolfram documentation page whose own header, empty menu column and
+   footer are hidden from inside (see HIDE in docs_site.js), so only its content shows here. */
+
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body {
+  font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #333;
+  background: #fff;
+}
+a { text-decoration: none; color: inherit; }
+
+/* header */
+#hdr {
+  position: fixed; top: 0; left: 0; right: 0; height: 56px;
+  background: #232629; color: #fff;
+  display: flex; align-items: center; padding: 0 20px;
+  z-index: 20; border-bottom: 3px solid #dd1100;
+}
+#hdr .brand { font-size: 20px; font-weight: 600; letter-spacing: .2px; color: #fff; cursor: pointer; }
+#hdr .brand .sub { font-size: 12px; font-weight: 400; color: #b9bdc1; margin-left: 10px; }
+#hdr #q {
+  margin-left: 28px; flex: 0 1 360px; min-width: 140px;
+  background: #16181a; color: #e8eaec; border: 1px solid #3a3f44; border-radius: 4px;
+  padding: 6px 10px; font-size: 13px; font-family: inherit; outline: none;
+}
+#hdr #q::placeholder { color: #7d858c; }
+#hdr #q:focus { border-color: #dd1100; background: #101214; }
+#hdr .home {
+  margin-left: auto; display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; color: #cfd2d5; border: 1px solid #44484c;
+  padding: 5px 12px; border-radius: 4px;
+}
+#hdr .home:hover { background: #2e3236; color: #fff; }
+#hdr .home svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+/* layout: the page tree on the left, the framed page in the middle */
+#main { position: fixed; top: 56px; left: 0; right: 0; bottom: 0; display: flex; }
+#side {
+  height: 100%; overflow-y: auto; overflow-x: hidden;
+  background: #fafafa; padding: 14px 0 40px;
+  width: 320px; min-width: 220px; max-width: 42%;
+  border-right: 1px solid #e3e3e3;
+}
+#content { flex: 1; min-width: 0; height: 100%; position: relative; background: #fff; }
+#frame { width: 100%; height: 100%; border: 0; display: block; }
+#loading {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  color: #999; font-size: 14px; background: #fff; pointer-events: none;
+  opacity: 0; transition: opacity .15s;
+}
+#loading.on { opacity: 1; }
+/* a hash that names no page of the tree: the root guide is shown, and this says why */
+#note {
+  display: none; position: absolute; top: 12px; left: 24px; right: 24px; z-index: 5;
+  padding: 8px 12px; border: 1px solid #f0c36d; border-radius: 4px;
+  background: #fff7e6; color: #6b4e00; font-size: 13px;
+}
+#note.on { display: block; }
+
+/* the tree */
+#side ul { list-style: none; margin: 0; padding: 0; }
+#side li { position: relative; }
+#side a {
+  display: block; padding: 6px 18px; line-height: 1.35;
+  color: #333; font-size: 14px; border-left: 3px solid transparent; white-space: normal;
+}
+#side a:hover { background: #f0f1f2; }
+#side a.active { background: #fdeee9; color: #c4280b; border-left-color: #dd1100; }
+/* a guide: the root at the head of the tree, the others in the Guides group */
+#side a.gd { font-weight: 600; font-size: 14px; color: #2a2a2a; }
+#side a.root { font-size: 15px; }
+#side a.tut { color: #1a6ba5; }
+#side a.sym { color: #1a6ba5; font-family: 'Source Code Pro', Menlo, Consolas, monospace; font-size: 13px; }
+#side ul ul { padding-left: 12px; }
+/* a group heading: a label, not a page, so it is not a link */
+#side .grp {
+  display: block; padding: 8px 18px 4px; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase; color: #7a838c;
+}
+/* a rail whose every entry is filtered out says so, instead of going blank */
+.nav-empty { padding: 10px 18px; color: #9aa3ab; font-size: 12px; font-style: italic; }
+
+/* collapsible: the native disclosure marker, so no glyph is spelled out here */
+#side details { margin: 0; }
+#side summary { cursor: pointer; padding-left: 6px; }
+#side summary::marker { color: #aab0b6; font-size: 11px; }
+#side summary > a, #side summary > .grp { display: inline-block; width: calc(100% - 20px); }
+
+/* ---- narrow screens ---------------------------------------------------------------------
+   The desktop layout is two columns in a flex row, which leaves a phone a third of the viewport
+   for the actual page. Below 900px the tree becomes an off-canvas drawer opened from the header,
+   and the content takes the full width. Below 560px the header keeps only the brand, the filter
+   and the drawer button. */
+#navToggle, #scrim { display: none; }
+
+@media (max-width: 900px) {
+  #hdr { padding: 0 12px; gap: 8px; }
+  #hdr .brand { font-size: 17px; }
+  #hdr .brand .sub { display: none; }
+  #hdr #q { margin-left: 8px; flex: 1 1 auto; min-width: 0; }
+
+  #navToggle {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 34px; height: 30px; flex: 0 0 auto; cursor: pointer;
+    background: #2a2e32; color: #e8eaec; border: 1px solid #3a3f44; border-radius: 4px;
+    font-size: 15px; line-height: 1; -webkit-tap-highlight-color: transparent;
+  }
+  #navToggle:active { background: #3a3f44; }
+
+  /* the drawer slides over the content instead of stealing width from it */
+  #side {
+    position: fixed; top: 56px; bottom: 0; left: 0; z-index: 40;
+    width: 82vw; max-width: 340px;
+    transform: translateX(-102%); transition: transform .18s ease-out;
+    box-shadow: 0 0 24px rgba(0, 0, 0, .28);
+  }
+  #side.open { transform: translateX(0); }
+  #scrim.on { display: block; position: fixed; inset: 56px 0 0; background: rgba(0, 0, 0, .38); z-index: 35; }
+  #content { width: 100%; }
+}
+
+@media (max-width: 560px) {
+  #hdr .home { display: none; }
+  #hdr #q { font-size: 16px; }   /* 16px keeps iOS from zooming the page on focus */
+}
+
+/* a coarse pointer needs a bigger hit target than a mouse does */
+@media (pointer: coarse) {
+  #side a { padding-top: 8px; padding-bottom: 8px; }
+  #side summary { padding-top: 4px; padding-bottom: 4px; }
+}
+
+/* ---- the rail splitter -------------------------------------------------------------------
+   Drag the divider to rebalance the two columns; double-click restores the default. The hit area
+   is wider than the visible line, so it is grabbable without reading as a divider of its own. */
+.splitter {
+  flex: 0 0 5px; position: relative; cursor: col-resize; background: transparent;
+  -webkit-tap-highlight-color: transparent; touch-action: none;
+}
+.splitter::before {
+  content: ""; position: absolute; top: 0; bottom: 0; left: 2px; width: 1px; background: transparent;
+}
+.splitter:hover::before, .splitter.dragging::before { background: #dd1100; }
+.splitter:focus-visible { outline: 2px solid #dd1100; outline-offset: -2px; }
+/* while dragging, the iframe must not swallow the pointer stream */
+#main.resizing #frame { pointer-events: none; }
+#main.resizing { cursor: col-resize; user-select: none; }
+
+@media (max-width: 900px) {
+  /* the rail is a drawer here, so there is nothing to resize */
+  .splitter { display: none; }
+}

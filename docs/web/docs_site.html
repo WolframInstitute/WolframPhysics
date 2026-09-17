@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!-- Shell of the single-page documentation browser: the page tree on the left, one iframe in the
+     middle. scripts/build_site.wls fills the slots (title, fonts, css, base, homeURL, sidebar, js)
+     and writes the result as index.html, for either target. Slots are StringTemplate slots, so
+     nothing else in this file may carry a backtick. The fonts slot is where the font bundles come
+     from: the files the render ships beside the pages on a local build, so the local site needs no
+     network at all, and Wolfram's CDN in the cloud. -->
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>`title` - Wolfram Institute</title>
+<link rel="stylesheet" href="`fonts`/source-sans-pro/1.0/global.css" />
+<link rel="stylesheet" href="`fonts`/source-code-pro/1.0/all.css" />
+<style>`css`</style>
+</head>
+<body>
+<header id="hdr">
+  <button id="navToggle" type="button" aria-label="Guides, tutorials and reference pages">&#9776;</button>
+  <span class="brand" id="homelink">`title`<span class="sub">Wolfram Institute</span></span>
+  <input id="q" type="search" autocomplete="off" spellcheck="false"
+    placeholder="Filter the pages  (/)" aria-label="Filter the navigation" />
+  <a class="home" id="resourcelink" href="`base`/" target="_blank" rel="noopener">Resource page
+    <svg viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8" /></svg>
+  </a>
+</header>
+<div id="scrim"></div>
+<div id="main">
+  <nav id="side">`sidebar`</nav>
+  <div class="splitter" id="splitL" role="separator" aria-orientation="vertical" tabindex="0"
+       aria-label="Resize the navigation rail"></div>
+  <div id="content">
+    <div id="note" role="status"></div>
+    <div id="loading">Loading...</div>
+    <iframe id="frame" src="`homeURL`" title="documentation"></iframe>
+  </div>
+</div>
+<script>`js`</script>
+</body>
+</html>
