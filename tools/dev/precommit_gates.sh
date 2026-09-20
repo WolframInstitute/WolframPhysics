@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 # The repository-completeness gates CI runs, run BEFORE a commit exists, so a push never goes
-# red on a check that costs seconds locally: the two python gates over the tree (the
-# documentation names only symbols the paclet exports; every web link the sources carry serves
-# a page) and the house-style lint over every markdown file (scripts/lint_docs.wls).
+# red on a check that costs seconds locally: the three python gates over the tree (the
+# documentation names only symbols the paclet exports; the guide hierarchy holds together; every
+# web link the sources carry serves a page) and the house-style lint over every markdown file
+# (scripts/lint_docs.wls).
 # Notebook freshness is not a gate here: the built notebooks are not tracked in git, so no commit
 # can carry a stale one. That guarantee lives on the build side, where the notebooks are read:
 # scripts/docbuild.wls and scripts/build_paclet.wls refuse a tree whose notebooks are missing or
@@ -26,6 +27,11 @@ fail=0
 
 # A reference page or a paclet: link must be for a symbol the Kernel exports.
 python3 tools/dev/doc_symbols_check.py || fail=1
+
+# The guide hierarchy is a tree the sidebar is built from: every guide reachable from the root,
+# one parent each, linked headings only on the root and the area hubs, reciprocal RelatedGuides,
+# and Name, basename and URI tail in agreement.
+python3 tools/dev/doc_guide_graph_check.py || fail=1
 
 # Every web link in the documentation sources serves a page (the guide is an index of links
 # into the Function Repository, other paclets, GitHub and the web).

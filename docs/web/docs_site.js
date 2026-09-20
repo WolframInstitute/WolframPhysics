@@ -116,7 +116,11 @@
     } catch (e) {}
   }
 
-  /* ---- the tree ------------------------------------------------------------------------- */
+  /* ---- the tree -------------------------------------------------------------------------
+     The tree nests: the root, the groups under it, and inside Guides an area with its leaves
+     under it. A branch is written closed, so openAnc is what shows the reader where they are:
+     it walks up from the link, opening every <details> on the way, and the first one it opens is
+     the branch the link itself heads, so choosing an area also unfolds it. */
   function openAnc(a) {
     var n = a.parentNode;
     while (n && n !== side) {
@@ -216,7 +220,9 @@
 
   /* ---- filter ----------------------------------------------------------------------------
      Hide the entries that do not match, in place, keeping the whole ancestor chain of a match
-     visible so its group survives and opens. Clearing the box restores the tree as it was. */
+     visible and open, so a leaf is never left hidden inside a folded area and its group and its
+     area survive with it. A branch that matched on its own keeps its subtree and stays folded:
+     the area is one line the reader can open. Clearing the box restores the tree as it was. */
   var qBox = document.getElementById('q'), openState = null;
 
   function emptyNote(on) {
@@ -236,12 +242,14 @@
         lis = side.querySelectorAll('li'),
         as = side.querySelectorAll('a[data-id]'),
         ds = side.querySelectorAll('details'),
-        i, n, a;
+        i, j, n, a, kids;
     if (term && !openState) {            /* remember the shape before the first filter */
       openState = new Map();
       for (i = 0; i < ds.length; i++) { openState.set(ds[i], ds[i].open); }
     }
-    for (i = 0; i < lis.length; i++) { lis[i].__hit = false; }
+    /* __hit: this entry stays visible. __self: this entry is itself a match. __deep: something
+       below it matched, which is what opens a branch. */
+    for (i = 0; i < lis.length; i++) { lis[i].__hit = lis[i].__self = lis[i].__deep = false; }
     for (i = 0; i < as.length; i++) {
       a = as[i];
       /* the title and the page's own frontmatter keywords, so "branchial" finds the pages
@@ -250,15 +258,28 @@
         continue;
       }
       n = a.closest('li');
+      if (!n) { continue; }
+      n.__hit = n.__self = true;
+      n = n.parentElement && n.parentElement.closest('li');
       while (n && side.contains(n)) {
-        n.__hit = true;
+        n.__hit = n.__deep = true;
         n = n.parentElement && n.parentElement.closest('li');
       }
+    }
+    /* An area that matched on its own, and holds no match of its own inside, brings its leaves
+       with it: they are part of what was asked for, and a branch showing nothing but an empty
+       list reads as a broken one. A branch with a match below it keeps just that match, or a
+       broad word in the root's keywords would open the whole tree on top of the one page the
+       reader asked for. */
+    for (i = 0; i < lis.length; i++) {
+      if (!lis[i].__self || lis[i].__deep) { continue; }
+      kids = lis[i].querySelectorAll('li');
+      for (j = 0; j < kids.length; j++) { kids[j].__hit = true; }
     }
     for (i = 0; i < lis.length; i++) { lis[i].style.display = lis[i].__hit ? '' : 'none'; }
     for (i = 0; i < ds.length; i++) {
       if (!term) { ds[i].open = !!(openState && openState.get(ds[i])); }
-      else if (ds[i].closest('li').__hit) { ds[i].open = true; }
+      else { ds[i].open = !!ds[i].closest('li').__deep; }
     }
     emptyNote(!!term && side.querySelectorAll('li[style*="none"]').length === lis.length);
     if (!term) { openState = null; }

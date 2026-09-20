@@ -10,7 +10,8 @@
      DRYRUN=1 wolframscript -file scripts/build_site.wls <target>    print the navigation and stop
 
    Ported from HypergraphRewritingEngine's scripts/build_site.wls, with the guide hierarchy of
-   PureMath's scripts/build_docs.wls: one root guide, and a Guides group for the guides it links.
+   PureMath's scripts/build_docs.wls: one root guide, and a Guides group nesting the guides it
+   links, the guides those link, and so on down.
 
    Why a shell at all. The stock paclet shingle deploys each documentation page as a delayed embed
    that fetches the page's static render with a one second budget: a heavy page comes back empty,
@@ -35,12 +36,17 @@
    script's lines and the inventory.
 
    The navigation is read from the markdown sources, not from a list kept here. The guide named
-   by rootGuide below is the root of the tree. Every other guide under docs/en/Guides (at any
-   depth; the built notebooks are flat by basename) forms the Guides group, in the order the root
-   guide links them (paclet:<paclet>/guide/<Name> links in its body) and then alphabetically. The
-   RelatedTutorials of the guides, root first and then the Guides group in its order, give the
-   Tutorials group in the order the guides name them; the symbols the guides mention as code
-   spans, in the same guide order, give the Reference group in the order they are introduced. A
+   by rootGuide below is the root of the tree, and the guides under docs/en/Guides (at any depth;
+   the built notebooks are flat by basename) form the Guides group as a TREE rather than a flat
+   list: a guide's children are the guides its own body links (paclet:<paclet>/guide/<Name>,
+   written on the page as the target of a "### " heading), in the order it links them, and the
+   walk is depth first from the root, so an area guide sits under the root and its leaves under
+   the area. The hierarchy is a DAG, not a tree: a guide several pages link is expanded under the
+   first parent the walk reaches and never entered twice, so every page is in the navigation
+   exactly once. A guide no page links still belongs in the tree, and follows at the end of the
+   top level, alphabetically. The RelatedTutorials of the guides, read in that tree order, give
+   the Tutorials group in the order the guides name them; the symbols the guides mention as code
+   spans, in the same order, give the Reference group in the order they are introduced. A
    tutorial or a symbol page no guide names still belongs in the tree, alphabetically after the
    named ones. A group with no page is left out. Every page's Title and Keywords come from its own
    frontmatter (Title on the guides and the tutorials; a symbol page is titled by its symbol). A
@@ -169,6 +175,8 @@ filesByName[dir_String] := If[DirectoryQ[dir],
 	<||>
 ];
 
+counted[n_Integer, noun_String] := ToString[n] <> " " <> noun <> If[n == 1, "", "s"];
+
 guideFiles = filesByName[guidesDir];
 tutorialFiles = filesByName[tutorialsDir];
 symbolFiles = filesByName[symbolsDir];
@@ -176,18 +184,62 @@ If[! KeyExistsQ[guideFiles, rootGuide],
 	say["no root guide ", rootGuide, ".md under ", guidesDir];
 	Exit[1]
 ];
-rootFile = guideFiles[rootGuide];
 
-(* The root guide links the guides of the Guides group in a deliberate order, as
-   paclet:<paclet>/guide/<Name> links in its body; that is the order of the group, and a guide it
-   does not link follows alphabetically. The root itself is never a member of its own group. *)
+(* A guide links its children in its body, as paclet:<paclet>/guide/<Name>, in a deliberate
+   order; on the page that link is the target of a "### " heading, and it is the parent-to-child
+   edge of the hierarchy, which the directory layout does not decide. The Guides group is that
+   graph walked depth first from the root: the root's children are the areas, an area's children
+   are its leaves. *)
 guideLinks[file_String] := DeleteDuplicates @ StringCases[sourceBody[file],
-	"paclet:" ~~ pacletName ~~ "/guide/" ~~ name : (WordCharacter ..) :> name];
-linkedGuides = Select[guideLinks[rootFile], KeyExistsQ[guideFiles, #] && # =!= rootGuide &];
-guideOrder = Join[linkedGuides, Complement[Keys[guideFiles], Append[linkedGuides, rootGuide]]];
+	StartOfLine ~~ "###" ~~ Whitespace ~~ "[" ~~ Shortest[___] ~~ "](paclet:" ~~ pacletName ~~
+		"/guide/" ~~ name : (WordCharacter ..) ~~ ")" :> name];
+childGuides[name_String] := childGuides[name] =
+	Select[guideLinks[guideFiles[name]], KeyExistsQ[guideFiles, #] &];
+
+(* The graph is a DAG: a guide may be linked by several parents (a leaf that two areas both
+   want), and a body link back up would be a cycle. So the walk keeps a seen set and enters a
+   page once, under the first parent that reaches it, which both breaks the cycle and keeps every
+   page in the navigation exactly once, as the loader's findLink assumes. The root is seen before
+   the walk starts, so it is never a member of its own group. *)
+visited = <||>;
+guideNode[name_String] := Module[{children = {}},
+	visited[name] = True;
+	Scan[
+		Function[child, If[! KeyExistsQ[visited, child], AppendTo[children, guideNode[child]]]],
+		childGuides[name]
+	];
+	Append[entryOf["guide", guideFiles[name]], "children" -> children]
+];
+rootNode = guideNode[rootGuide];
+
+(* A guide the walk never reached belongs in the tree all the same, at the end of the top level
+   and alphabetically: a page nothing links is a page under construction, or one whose parent
+   lost its heading, and leaving it out of the navigation is how it stays lost. A guide no page
+   links at all heads such a branch, and takes whatever it links with it; anything still
+   unreached after those is linked only from inside its own unreachable island, and the
+   alphabetically first of them heads the next branch. *)
+linkedAnywhere = DeleteDuplicates[Catenate[childGuides /@ Keys[guideFiles]]];
+unreached[] := Sort @ Select[Keys[guideFiles], ! KeyExistsQ[visited, #] &];
+orphanNodes = {};
+Module[{remaining = unreached[], next},
+	While[remaining =!= {},
+		next = First[Select[remaining, ! MemberQ[linkedAnywhere, #] &], First[remaining]];
+		AppendTo[orphanNodes, guideNode[next]];
+		remaining = unreached[]
+	]
+];
+If[orphanNodes =!= {},
+	say[counted[Length[orphanNodes], "guide"], " no page links, at the end of the top level: ",
+		StringRiffle[#["name"] & /@ orphanNodes, ", "]]
+];
+
+(* a node and everything under it, in the order the tree presents them *)
+descend[node_Association] := Prepend[Catenate[descend /@ Lookup[node, "children", {}]], node];
+(* the items of the Guides group: the root's own branches, then the branches nothing links *)
+guideNodes = Join[rootNode["children"], orphanNodes];
 (* every guide, root first, in the order the tree presents them: the order in which their
    RelatedTutorials and their symbol mentions are collected below *)
-guidesInOrder = Prepend[guideOrder, rootGuide];
+guidesInOrder = #["name"] & /@ Join[descend[rootNode], Catenate[descend /@ orphanNodes]];
 
 (* The guides list their tutorials in a deliberate reading order, so that is the order of the
    Tutorials group; a tutorial no guide names still belongs in the tree, and follows. *)
@@ -202,21 +254,23 @@ guideMentions = DeleteDuplicates[Join @@ (
 mentionedSymbols = Select[guideMentions, KeyExistsQ[symbolFiles, #] &];
 symbolOrder = Join[mentionedSymbols, Complement[Keys[symbolFiles], mentionedSymbols]];
 
-(* a group of the tree, or nothing when it has no page *)
-groupOf[label_String, class_String, type_String, files_Association, order_List] :=
-	If[order === {}, Nothing,
-		<|"label" -> label, "class" -> class, "items" -> (entryOf[type, files[#]] & /@ order)|>];
+(* a group of the tree, or nothing when it has no page; an item of the Guides group carries the
+   items under it, an item of the other two is a page on its own *)
+groupOf[label_String, class_String, items_List] :=
+	If[items === {}, Nothing,
+		<|"label" -> label, "class" -> class, "items" -> items|>];
 
 tree = <|
-	"root" -> entryOf["guide", rootFile],
+	"root" -> KeyDrop[rootNode, "children"],
 	"groups" -> {
-		groupOf["Guides", "gd", "guide", guideFiles, guideOrder],
-		groupOf["Tutorials", "tut", "tutorial", tutorialFiles, tutorialOrder],
-		groupOf["Reference", "sym", "ref", symbolFiles, symbolOrder]
+		groupOf["Guides", "gd", guideNodes],
+		groupOf["Tutorials", "tut", entryOf["tutorial", tutorialFiles[#]] & /@ tutorialOrder],
+		groupOf["Reference", "sym", entryOf["ref", symbolFiles[#]] & /@ symbolOrder]
 	}
 |>;
-pages = Prepend[Join @@ (#["items"] & /@ tree["groups"]), tree["root"]];
-counted[n_Integer, noun_String] := ToString[n] <> " " <> noun <> If[n == 1, "", "s"];
+(* the pages of the navigation, flat and in tree order, whatever the nesting *)
+pages = KeyDrop[#, "children"] & /@ Prepend[
+	Catenate[Catenate[descend /@ #["items"]] & /@ tree["groups"]], tree["root"]];
 say[counted[Length[guidesInOrder], "guide"], ", ", counted[Length[tutorialOrder], "tutorial"], ", ",
 	counted[Length[symbolOrder], "symbol"], ": ", counted[Length[pages], "page"]];
 If[Length[pages] =!= Length[DeleteDuplicates[#["id"] & /@ pages]],
@@ -224,13 +278,19 @@ If[Length[pages] =!= Length[DeleteDuplicates[#["id"] & /@ pages]],
 	Exit[1]
 ];
 
-(* ---- DRYRUN: print what would be deployed or rendered, and stop ---- *)
+(* ---- DRYRUN: print what would be deployed or rendered, and stop ----
+   The indentation is the nesting: an area sits under the Guides label and its leaves under the
+   area, which is how a page that landed in the wrong branch is seen before anything is built. *)
+showItem[entry_Association, depth_Integer] := (
+	Print["      ", StringJoin[ConstantArray["  ", depth]], "- ", entry["title"], "  [", entry["id"], "]"];
+	Scan[showItem[#, depth + 1] &, Lookup[entry, "children", {}]]
+);
 If[Environment["DRYRUN"] === "1",
 	Print["+ ", tree["root"]["title"], "  [", tree["root"]["id"], "]"];
 	Scan[
 		Function[group,
 			Print["    ", group["label"]];
-			Scan[Print["      - ", #["title"], "  [", #["id"], "]"] &, group["items"]]
+			Scan[showItem[#, 0] &, group["items"]]
 		],
 		tree["groups"]
 	];
@@ -553,10 +613,29 @@ linkTag[entry_Association, class_String, group_String] := StringJoin[
 	"\" href=\"", esc[pageURLOf[entry["id"]]], "\">", esc[entry["title"]], "</a>"
 ];
 
+(* An item of a group, and under it the pages it links. A page with children is a <details>, so
+   an area folds away; it is written closed, and the loader opens the ancestors of whatever page
+   is showing (openAnc in docs_site.js), so the branch the reader is in is the one that is open.
+   The classes say where the item sits: "sub" on anything below the top level of its group, and
+   "area" on a page that has children, which is what the stylesheet reads. *)
+itemHTML[entry_Association, class_String, group_String, depth_Integer] := Module[
+	{children = Lookup[entry, "children", {}], itemClass},
+	itemClass = class <> If[depth > 0, " sub", ""] <> If[children === {}, "", " area"];
+	If[children === {},
+		"<li class=\"leaf\">" <> linkTag[entry, itemClass, group] <> "</li>",
+		StringJoin[
+			"<li class=\"branch\"><details><summary>", linkTag[entry, itemClass, group],
+			"</summary><ul class=\"kids\">",
+			StringJoin[itemHTML[#, class, group, depth + 1] & /@ children],
+			"</ul></details></li>"
+		]
+	]
+];
+
 groupHTML[group_Association] := StringJoin[
 	"<li class=\"branch\"><details open><summary><span class=\"grp\">", esc[group["label"]],
 	"</span></summary><ul>",
-	StringJoin[("<li>" <> linkTag[#, group["class"], ToLowerCase[group["label"]]] <> "</li>" &) /@ group["items"]],
+	StringJoin[(itemHTML[#, group["class"], ToLowerCase[group["label"]], 0] &) /@ group["items"]],
 	"</ul></details></li>"
 ];
 

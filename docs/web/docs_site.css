@@ -69,12 +69,25 @@ a { text-decoration: none; color: inherit; }
 }
 #side a:hover { background: #f0f1f2; }
 #side a.active { background: #fdeee9; color: #c4280b; border-left-color: #dd1100; }
-/* a guide: the root at the head of the tree, the others in the Guides group */
+/* a guide: the root at the head of the tree, then the areas of the Guides group and, nested
+   under each area, its leaves */
 #side a.gd { font-weight: 600; font-size: 14px; color: #2a2a2a; }
 #side a.root { font-size: 15px; }
+/* a guide below the top level of its group: lighter and a shade smaller, so a branch reads as a
+   branch instead of as a run of equally loud lines */
+#side a.gd.sub { font-weight: 400; font-size: 13px; }
 #side a.tut { color: #1a6ba5; }
 #side a.sym { color: #1a6ba5; font-family: 'Source Code Pro', Menlo, Consolas, monospace; font-size: 13px; }
-#side ul ul { padding-left: 12px; }
+
+/* The nesting. Each level indents, and less the deeper it goes, so a leaf three levels down
+   still has most of the rail for its title. A page with children wears the disclosure marker and
+   a page without does not, so a leaf takes the width of that marker as padding instead and the
+   two line up as the siblings they are. */
+#side ul ul { padding-left: 10px; }
+#side ul ul ul { padding-left: 8px; }
+#side li.leaf > a { padding-left: 24px; }
+/* the children of a branch: a hairline down the left says how far the branch reaches */
+#side ul.kids { border-left: 1px solid #e3e5e7; }
 /* a group heading: a label, not a page, so it is not a link */
 #side .grp {
   display: block; padding: 8px 18px 4px; font-size: 11px; font-weight: 700;
@@ -83,11 +96,15 @@ a { text-decoration: none; color: inherit; }
 /* a rail whose every entry is filtered out says so, instead of going blank */
 .nav-empty { padding: 10px 18px; color: #9aa3ab; font-size: 12px; font-style: italic; }
 
-/* collapsible: the native disclosure marker, so no glyph is spelled out here */
+/* collapsible: the native disclosure marker, so no glyph is spelled out here. The marker is the
+   gutter of a branch, so the label beside it takes almost none of its own; the leaves match that
+   gutter with padding (above), and every level of the tree lines up. */
 #side details { margin: 0; }
 #side summary { cursor: pointer; padding-left: 6px; }
 #side summary::marker { color: #aab0b6; font-size: 11px; }
-#side summary > a, #side summary > .grp { display: inline-block; width: calc(100% - 20px); }
+#side summary > a, #side summary > .grp {
+  display: inline-block; width: calc(100% - 20px); padding-left: 2px;
+}
 
 /* ---- narrow screens ---------------------------------------------------------------------
    The desktop layout is two columns in a flex row, which leaves a phone a third of the viewport
