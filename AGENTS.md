@@ -19,13 +19,13 @@ resource definition `WolframPhysics/ResourceDefinition.nb` (build artifacts, not
 in git: see "The documentation layout").
 
 Today the paclet ships no functions. Its only export is
-`$WolframInstituteWolframPhysicsVersion`, and its documentation is a single
-guide page, `docs/en/Guides/WolframPhysics.md`, that surveys and links every
-relevant function that already exists across the ecosystem: the built-in
-language, the Wolfram Function Repository, published paclets (SetReplace,
-WolframInstitute/Hypergraph, Wolfram/Multicomputation,
+`$WolframInstituteWolframPhysicsVersion`, and its documentation is a tree of
+guide pages rooted at `docs/en/Guides/WolframPhysics.md`, which together survey
+and link every relevant function that already exists across the ecosystem: the
+built-in language, the Wolfram Function Repository, published paclets
+(SetReplace, WolframInstitute/Hypergraph, Wolfram/Multicomputation,
 WolframInstitute/HypergraphRewriteEngine), the wolframphysics.org site, Wolfram
-Community and the Wolfram Institute. The research behind that guide lives in
+Community and the Wolfram Institute. The research behind those guides lives in
 `docs/research/<source>.md`, one report per source surveyed, named in
 lowercase with hyphens (`built-in-wolfram-language.md`,
 `paclet-repository-and-paclets.md`). Implementations come later, a topic at a time, and
@@ -46,7 +46,10 @@ git, written by `./build_docs.sh` and rebuilt by every publish (see
 uses exactly these names:
 
 ```
-docs/en/Guides/<Name>.md                     Template: Guide      (WolframPhysics.md, the root guide)
+docs/en/Guides/WolframPhysics.md             Template: Guide      the root guide
+docs/en/Guides/<Area>/<Area>.md              Template: Guide      an area hub (basename equals its folder)
+docs/en/Guides/<Area>/<Leaf>.md              Template: Guide      a leaf, the full page for one topic
+docs/en/Guides/<Name>.md                     Template: Guide      a leaf the root carries itself
 docs/en/Tutorials/<Name>.md                  Template: TechNote
 docs/en/ReferencePages/Symbols/<Name>.md     Template: Symbol     (empty until the paclet exports a symbol)
 docs/ResourceDefinition.md                   Template: Paclet     (the resource definition)
@@ -70,6 +73,26 @@ writes `<Name>.nb` and fails loudly when `Name` and the basename disagree. The
 page conventions of the converter itself are in
 `tools/MarkdownToNotebook/docs/doc-pages.md` and in `examples.md` beside it.
 
+The guides are a hierarchy, and the hierarchy lives in the pages, not in the
+directories: a
+`### [<Title>](paclet:WolframInstitute/WolframPhysics/guide/<Name>)` heading in
+a page's body is the parent-to-child edge, and it is what the documentation
+build and `scripts/build_site.wls` read to nest the sidebar. The root and an
+area hub carry those linked headings, each followed by three to six
+representative bullets; a leaf carries none, because on a leaf the same heading
+is not a cross-reference but a new edge that silently reparents an area (a
+sibling is named in `RelatedGuides` instead). Tell the three roles apart by the
+path before touching a heading: the root is `Guides/WolframPhysics.md`, a hub is
+the eponymous page of its folder, anything else is a leaf. The built notebooks
+are flat by basename, so every guide `Name` is unique across the whole tree, and
+`RelatedGuides` names the parent and the children or siblings, reciprocally on
+both sides.
+
+The hierarchy is thematic: pages are organized by subject and never by source,
+so the same function and the same paclet may appear on several pages when each
+page needs them, with a description written for that page's angle.
+Cross-listing is allowed, not a duplication to fix.
+
 The scripts that drive this (all under `scripts/`, each with a header comment
 that states its usage, its knobs and its exit status):
 
@@ -87,12 +110,12 @@ that states its usage, its knobs and its exit status):
 
 ## Guide entries for functions that live elsewhere
 
-The root guide follows the ordinary guide conventions (`## Abstract`,
-`## Functions` with `### ` topic sections, fundamentals first, `- ` bullets, a
-trailing bare list of lesser functions ending in ` …`) with one deliberate
-extension: because the paclet has no symbols yet, the bullets list functions
-that live elsewhere, and the converter cannot make a chip for those. A bare
-backtick chip links to this paclet's own `ref/` page, which does not exist, so:
+A guide follows the ordinary guide conventions (`## Abstract`, `## Functions`
+with `### ` topic sections, fundamentals first, `- ` bullets, a trailing bare
+list of lesser functions ending in ` …`) with one deliberate extension: because
+the paclet has no symbols yet, the bullets list functions that live elsewhere,
+and the converter cannot make a chip for those. A bare backtick chip links to
+this paclet's own `ref/` page, which does not exist, so:
 
 - A built-in is a real chip with the `(WL)` tag:
   `` - `Graph` (WL) description ``. It links to the System page.
@@ -113,7 +136,20 @@ backtick chip links to this paclet's own `ref/` page, which does not exist, so:
 - A GitHub, Community or site resource is a markdown link to the page, with
   the origin in parentheses.
 - The provenance tag in parentheses right after the link or chip is mandatory
-  on every entry.
+  on every entry of a thematic section.
+
+Where a topic draws a whole run of entries from one source, the source moves
+from the tags onto a heading. A page's `### ` sections run thematic first,
+holding the curated core of the topic from every source; then, for each source
+that gives this topic roughly eight entries or more, one `### <Source>` section
+titled as the inventory names the source (`WolframInstitute/Infrageometry`,
+`Wolfram/DiagrammaticComputation`, `SetReplace`, `Wolfram Function Repository`,
+`Wolfram Community`). Inside such a section no entry carries a tag: the heading
+says where everything in it lives, and repeating that on every bullet is the
+noise the arrangement exists to remove. Its first bullet may link the paclet's
+own page to say what the paclet is. A source contributing only a handful of
+entries to the topic stays in the thematic sections, with its tag. A built-in
+keeps its `(WL)` marker wherever it appears.
 
 The `wolfram-guide-page` skill carries the full format; the
 `functions-library-ingest` skill is how an external source is surveyed into
@@ -129,7 +165,7 @@ relevant one before starting that kind of work.
 
 | Skill | Folder | Use it to |
 | --- | --- | --- |
-| `wolfram-guide-page` | [`.agent-skills/wolfram-guide-page/`](.agent-skills/wolfram-guide-page/SKILL.md) | Author or fix the root guide under `docs/en/Guides/`: the documentation home, an abstract plus a content-first index of the functions of the Wolfram Physics Project, wherever they live, with the provenance convention above. |
+| `wolfram-guide-page` | [`.agent-skills/wolfram-guide-page/`](.agent-skills/wolfram-guide-page/SKILL.md) | Author or fix a guide under `docs/en/Guides/`, at any level of the tree: the root, an area hub, or a leaf page indexing one topic's functions wherever they live, with the hierarchy and the provenance conventions above. |
 | `functions-library-ingest` | [`.agent-skills/functions-library-ingest/`](.agent-skills/functions-library-ingest/SKILL.md) | Survey an external source of Wolfram Physics functions (a paclet, the Function Repository, a site, a Community post) into vetted guide entries with source traceability. |
 | `implement-wolfram-functions` | [`.agent-skills/implement-wolfram-functions/`](.agent-skills/implement-wolfram-functions/SKILL.md) | Turn a guide's listed symbols into kernel code under `WolframPhysics/Kernel/` plus matching tests, once a topic is implemented here rather than linked. |
 | `wolfram-symbol-page` | [`.agent-skills/wolfram-symbol-page/`](.agent-skills/wolfram-symbol-page/SKILL.md) | Author a symbol reference page (`ref/`) under `docs/en/ReferencePages/Symbols/` for a symbol this paclet exports: Usage, Details and Options, Examples, Scope, Possible Issues. |
@@ -188,7 +224,7 @@ wolframscript -file /path/to/scratch.wls
 ```
 
 `PacletDirectoryLoad` of `WolframPhysics/` makes the examples run against this
-checkout rather than an installed release. Functions the guide links from
+checkout rather than an installed release. Functions the guides link from
 elsewhere are evaluated the way a reader would evaluate them:
 `ResourceFunction["WolframModel"]` for the Function Repository,
 `PacletInstall` then `Needs` for a paclet, and a scratch run records what came
@@ -244,10 +280,14 @@ the commands:
    actual functions with scratch scripts and record what they return; verify by
    evaluation, never from memory. The `functions-library-ingest` skill is the
    survey of one source into its report.
-1. Guide page, skill `wolfram-guide-page`: land the topic on the root guide,
-   `docs/en/Guides/WolframPhysics.md`, as a `### ` section of provenance-tagged
-   entries in the format above. The guide is the contract the next stage
-   implements: what this paclet will provide itself, and what it links.
+1. Guide page, skill `wolfram-guide-page`: land the topic on the guide whose
+   subject it belongs to, as a `### ` section of entries in the format above,
+   and where it spans several pages, on each of them with a description written
+   for that page's angle. A topic large enough to be its own page becomes a
+   leaf under its area hub, linked from the hub by a `### [<Title>](paclet:…)`
+   heading and named in the `RelatedGuides` of both. The guide is the contract
+   the next stage implements: what this paclet will provide itself, and what it
+   links.
 2. Implement, skill `implement-wolfram-functions`: turn the guide's own symbols
    into `WolframPhysics/Kernel/<Category>/<Topic>.wl` with `PackageExported`
    declarations and usage messages, plus the matching

@@ -45,6 +45,9 @@ repositories, whose scripts carry the same headers.
   docs/
     en/                      documentation markdown sources (built to .nb)
       Guides/WolframPhysics.md          the root guide, the documentation home
+      Guides/<Area>/<Area>.md           an area hub: the guides of one area of the field
+      Guides/<Area>/<Leaf>.md           a leaf: the full page for one topic of that area
+      Guides/<Name>.md                  a leaf the root carries itself
       Tutorials/<Name>.md
       ReferencePages/Symbols/<Name>.md  empty until the paclet exports a symbol
     ResourceDefinition.md    the paclet resource's definition (Template Paclet)
@@ -121,10 +124,10 @@ $WolframInstituteWolframPhysicsVersion
 (* <|"Version" -> "0.0.1", "WolframVersion" -> "15.0+", "Author" -> "Wolfram Institute"|> *)
 ```
 
-The functions the guide surveys are used where they live: a built-in directly,
+The functions the guides survey are used where they live: a built-in directly,
 a Function Repository function through `ResourceFunction["WolframModel"]`, a
-paclet function after `PacletInstall` and `Needs` of that paclet. The guide's
-provenance tags say which is which.
+paclet function after `PacletInstall` and `Needs` of that paclet. A guide's
+provenance tags, and the per-source sections of a page, say which is which.
 
 ## Adding a topic
 
@@ -152,13 +155,21 @@ by name, or follow the steps by hand.
    evaluation, never from memory. The `functions-library-ingest` skill is how
    a source is surveyed into a report and vetted entries.
 
-1. Guide page, skill `wolfram-guide-page`. Land the topic on the root guide,
-   `docs/en/Guides/WolframPhysics.md`, as a `### ` section of entries in the
+1. Guide page, skill `wolfram-guide-page`. Land the topic on the guide whose
+   subject it belongs to, as a `### ` section of entries in the
    provenance-tagged format [AGENTS.md](AGENTS.md) "Guide entries for
    functions that live elsewhere" describes: a built-in is a chip with `(WL)`,
-   everything else is a markdown link with its origin in parentheses. The
+   everything else is a markdown link with its origin in parentheses, except
+   inside a per-source section, where the heading carries the origin for every
+   entry under it. The guides are a thematic hierarchy (the root
+   `docs/en/Guides/WolframPhysics.md`, an area hub
+   `docs/en/Guides/<Area>/<Area>.md`, a leaf beside it), so a topic that spans
+   areas is listed on each page that needs it, with a description written for
+   that page's angle, and a topic large enough to be its own page becomes a
+   leaf: a `### [<Title>](paclet:WolframInstitute/WolframPhysics/guide/<Name>)`
+   heading on its hub, and the two named in each other's `RelatedGuides`. The
    `functions-library-ingest` skill is how an external source is surveyed into
-   vetted entries. This page is the contract the next stage implements,
+   vetted entries. These pages are the contract the next stage implements,
    including which category the code lands in, since a kernel file follows the
    guide that chips its symbols.
 
@@ -263,8 +274,11 @@ bumped.
 Output is flat by basename, regardless of how deeply the source is nested: the
 documentation system resolves guide, tutorial and symbol URIs in a flat
 namespace, and the sidebar hierarchy comes from the guide-to-guide link graph,
-not the directory layout. So any category directories under `docs/en/` organize
-the sources, not the built tree:
+not the directory layout. A guide names its children in its own body, as
+`### [<Title>](paclet:WolframInstitute/WolframPhysics/guide/<Name>)` headings
+in the order it wants them read, and only the root and the area hubs carry such
+headings. So any category directories under `docs/en/` organize the sources,
+not the built tree, and every guide basename is unique across the whole tree:
 
 ```
 docs/en/Guides/**/<Name>.md                  -> WolframPhysics/Documentation/English/Guides/<Name>.nb
@@ -303,8 +317,8 @@ research behind a page goes under `docs/research/`.
 ## The documentation site
 
 The built notebooks are read the way a reader will read them, through a
-single-page documentation browser: the guide, its tutorials and its symbol
-pages as a tree on the left, one page in a frame beside it, and every link
+single-page documentation browser: the guides nested as they link one another,
+with the tutorials and the symbol pages under them, as a tree on the left, one page in a frame beside it, and every link
 inside a page to another page of that tree routed back through it instead of
 escaping into the chrome around it (a link to anything else, Wolfram's own
 documentation and the resources the guide surveys above all, keeps its own
@@ -371,15 +385,23 @@ or the one the kernel already holds, is where the shell lands, so read the
 account the script prints before letting a deploy continue.
 
 The navigation is read from the markdown sources, never from a list inside the
-script: the guide is the root, its `RelatedTutorials` give the Tutorials group
-in the order the guide names them, the symbols the guide introduces give the
-Reference group in the order it introduces them (empty while the paclet exports
-none), and each page's `Title` and `Keywords` come from its own frontmatter (the
-filter box in the header matches both). A page added under `docs/en` appears in
-the tree with no edit to the script, and `DRYRUN=1` prints that tree and stops,
-which is how to check that a new page landed where it should before rendering
-or deploying anything. A hash that names no page shows the guide with a note
-saying so, rather than a server error inside the frame.
+script: the root guide heads the tree, and the Guides group under it nests the
+guides as the pages themselves link them, walked depth first from the root, so
+an area sits under the root and its leaves fold away under the area. A guide
+two pages link is kept under the first the walk reaches, so every page is in
+the tree once; a guide no page links follows at the end of the top level,
+alphabetically, which is how a page whose parent lost its heading is noticed
+rather than lost. The `RelatedTutorials` of the guides, read in that tree
+order, give the Tutorials group in the order the guides name them, the symbols
+the guides introduce give the Reference group in the order they are introduced
+(empty while the paclet exports none), and each page's `Title` and `Keywords`
+come from its own frontmatter (the filter box in the header matches both, and
+keeps an area visible when one of its leaves matches). A page added under
+`docs/en` appears in the tree with no edit to the script, and `DRYRUN=1` prints
+that tree, its nesting as indentation, and stops, which is how to check that a
+new page landed where it should before rendering or deploying anything. A hash
+that names no page shows the root guide with a note saying so, rather than a
+server error inside the frame.
 
 The markup of the shell is `docs/web/docs_site.html`, `docs/web/docs_site.css`
 and `docs/web/docs_site.js`, plus `docs/web/docs_page.html`, the notebook host
@@ -407,7 +429,7 @@ parallel with a browser User-Agent, and fails on anything but a 200; the Wolfram
 resource sites answer a request for a resource that does not exist with a chain
 of redirects to a sign-in page rather than a 404, so a chain ending on
 `account.wolfram.com` is reported as a missing resource. It exists because the
-root guide is an index of links into pages this repository does not build.
+guides are an index of links into pages this repository does not build.
 `WP_LINKS_JOBS=<n>` and `WP_LINKS_TIMEOUT=<s>` size the requests;
 `WP_SKIP_LINKS=1` skips it on a machine without network (CI still runs it).
 
@@ -482,7 +504,7 @@ and is not in git: it ships in the deployed resource, so a deploy runs the
 build first, and `scripts/docbuild.wls` exits 1 naming it when it is not there
 or when the markdown beside it is newer. Its
 `Description` must equal the `"Description"` in `WolframPhysics/PacletInfo.wl`,
-its `MainGuide` is the relative notebook path of the guide, and its
+its `MainGuide` is the relative notebook path of the root guide, and its
 `Categories` are Paclet Repository category names; the category checkboxes are
 filled again at publish time, which repairs the empty grid a build machine with
 no cloud login converts (the item list comes from the resource system) and

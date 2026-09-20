@@ -6,14 +6,15 @@ multiway systems, causal and branchial graphs, rulial space and
 multicomputation. Each area is to ship with a reference implementation and
 documentation that links back to the source material.
 
-> Status: a guide, no code yet. The paclet loads and reports its version, and
-> its documentation is one guide page that surveys and links every relevant
-> function that already exists across the ecosystem: the built-in Wolfram
-> Language, the Wolfram Function Repository, published paclets (SetReplace,
-> WolframInstitute/Hypergraph, Wolfram/Multicomputation,
+> Status: guides, no code yet. The paclet loads and reports its version, and
+> its documentation is a tree of guide pages, a root over one guide per area
+> of the field and one guide per topic under each area, which together survey
+> and link every relevant function that already exists across the ecosystem:
+> the built-in Wolfram Language, the Wolfram Function Repository, published
+> paclets (SetReplace, WolframInstitute/Hypergraph, Wolfram/Multicomputation,
 > WolframInstitute/HypergraphRewriteEngine), the wolframphysics.org site,
 > Wolfram Community and the Wolfram Institute. Implementations are added a
-> topic at a time from the research behind that guide.
+> topic at a time from the research behind those guides.
 
 ## Install
 
@@ -53,11 +54,15 @@ Documentation Center after `Needs`.
   you run the build (see [CONTRIBUTING.md](CONTRIBUTING.md), "Building the
   documentation").
 - `docs/en/`: the documentation sources, the source of truth (Markdown built
-  to notebooks): `Guides/WolframPhysics.md`, the root guide and the
-  documentation home; `Tutorials/`; `ReferencePages/Symbols/` (empty until the
-  paclet exports a symbol). `docs/ResourceDefinition.md` is the paclet
-  resource's definition.
-- `docs/research/`: the research reports the guide is written from, one
+  to notebooks):
+  `Guides/WolframPhysics.md`, the root guide and the documentation home, over
+  `Guides/<Area>/<Area>.md`, the hub of one area, over
+  `Guides/<Area>/<Leaf>.md`, the full page for one topic of that area; the
+  hierarchy is thematic, so a function or a paclet appears wherever the
+  subject calls for it, on as many pages as need it. `Tutorials/`;
+  `ReferencePages/Symbols/` (empty until the paclet exports a symbol).
+  `docs/ResourceDefinition.md` is the paclet resource's definition.
+- `docs/research/`: the research reports the guides are written from, one
   `<source>.md` per source surveyed (the Function Repository, the Paclet
   Repository, GitHub, the Wolfram Institute, the built-in language).
 - `docs/notes/`: the authoring notes that came out of probing the converter

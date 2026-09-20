@@ -1,6 +1,6 @@
 ---
 name: wolfram-guide-page
-description: "Author, repair, or reorganize a WolframPhysics guide page under `docs/en/Guides/`: today the single root guide `docs/en/Guides/WolframPhysics.md`, later the category guides that grow out of it, with their placement in the body-link guide DAG, reciprocal `RelatedGuides`, parent summaries and tutorial backlinks. A guide organizes a topic's vocabulary by subject, drawing on three pools: the paclet's own symbols (none yet), built-in Wolfram Language functions, and functions that live elsewhere in the Wolfram Physics ecosystem (the Function Repository, published paclets, GitHub, Wolfram Community, wolframphysics.org), which are listed as links with a provenance tag. Use this whenever the user wants to create or change a guide, audit guide coverage or hierarchy completeness, add or split out a topic, fold in built-ins or ecosystem functions, reorganize sections, or rewrite a guide abstract. Trigger even when the user only provides a guide path or a topic name without saying \"guide\"."
+description: "Author, repair, or reorganize a WolframPhysics guide page under `docs/en/Guides/`: the root `docs/en/Guides/WolframPhysics.md`, an area hub `docs/en/Guides/<Area>/<Area>.md`, or a leaf page beside it, with their placement in the body-link guide DAG, reciprocal `RelatedGuides`, parent summaries and tutorial backlinks. A guide organizes a topic's vocabulary by subject, drawing on three pools: the paclet's own symbols (none yet), built-in Wolfram Language functions, and functions that live elsewhere in the Wolfram Physics ecosystem (the Function Repository, published paclets, GitHub, Wolfram Community, wolframphysics.org), which are listed as links with a provenance tag, or under a per-source section heading that carries the provenance for every entry beneath it. Use this whenever the user wants to create or change a guide, audit guide coverage or hierarchy completeness, add or split out a topic, fold in built-ins or ecosystem functions, reorganize sections, or rewrite a guide abstract. Trigger even when the user only provides a guide path or a topic name without saying \"guide\"."
 ---
 
 # Authoring a WolframPhysics guide page
@@ -117,12 +117,16 @@ round out the topic with a bare index of lesser-used functions at the end.
   may lead with several comma-separated symbols, each of which becomes its own chip.
   Built-in System symbols resolve to chips the same way paclet symbols do; a bullet
   that does not start with a backtick span renders as plain guide text.
-- The structural template:
-  [docs/en/Guides/WolframPhysics.md](../../docs/en/Guides/WolframPhysics.md), the root
-  guide and today the only one. Copy its structure: frontmatter, `## Abstract`,
-  `## Functions` with `### ` topic subsections ordered fundamentals-first, the `- `
-  bullet form with a one-line description, the `(WL)` marker on built-ins, the tagged
-  link form on ecosystem functions, and a trailing more-functions list.
+- The structural templates, one per role. Read the page of the role you are writing
+  and copy its structure, not just this text:
+  [docs/en/Guides/WolframPhysics.md](../../docs/en/Guides/WolframPhysics.md) for the
+  root, `docs/en/Guides/<Area>/<Area>.md` for an area hub, and any other page in such a
+  folder for a leaf. A leaf is the full form: frontmatter, `## Abstract`, `## Functions`
+  with `### ` topic subsections ordered fundamentals-first, then the per-source
+  subsections, the `- ` bullet with a one-line description, the `(WL)` marker on
+  built-ins, the tagged link form on ecosystem functions, and a trailing more-functions
+  list. The root and a hub are the short form: an abstract, then `### ` headings that
+  link their children with three to six representative bullets under each.
 - The research reports under `docs/research/` (flat `.md` files, one per source
   surveyed: a Function Repository keyword, a paclet, a Community series, a repository,
   a paper). They are the inventory: each names the functions a source provides, where
@@ -143,24 +147,31 @@ round out the topic with a bare index of lesser-used functions at the end.
 
 Choose the page role before applying a template:
 
-- Root: `docs/en/Guides/WolframPhysics.md`. Today it is the only guide and carries the
-  full content-first structure below (abstract, topic sections, tails). When the first
-  category guide is split out, the root becomes a hub: each category is a
-  `### [<Title>](paclet:WolframInstitute/WolframPhysics/guide/<Name>)` heading, with a
-  small curated set of representative bullets beneath it, and the abstract shrinks to
-  a category-level paragraph ending "Each area has its own guide."
-- Area hub: a page that leads with linked child-guide headings and may place a few
-  representative bullets under each.
+- Root: `docs/en/Guides/WolframPhysics.md`, the documentation home, and a hub. A short
+  abstract for the whole field, then a `## Functions` section whose
+  `### [<Area>](paclet:WolframInstitute/WolframPhysics/guide/<Name>)` headings link the
+  areas in reading order, each followed by three to six representative bullets. It
+  links the area hubs and the leaves it carries itself.
+- Area hub: `docs/en/Guides/<Area>/<Area>.md`, the eponymous page of its folder. An
+  abstract for the area, then a
+  `### [<Leaf Title>](paclet:WolframInstitute/WolframPhysics/guide/<Leaf>)` heading per
+  leaf, each with three to six representative bullets. A hub is an index of its area,
+  not a second copy of it.
+- Leaf: any other page in such a folder, `docs/en/Guides/<Area>/<Leaf>.md`, or a page
+  at the top level of `docs/en/Guides/` that the root carries itself. It is the full
+  page: an abstract, then `## Functions` with plain `### ` subsections, the per-source
+  subsections below, and the trailing more-functions lists.
 - Hybrid hub: a page that carries substantial function content while its linked
-  subsection headings are also child-guide edges.
-- Leaf: a page using the full content-first section structure and trailing
-  more-functions lists below.
+  subsection headings are also child-guide edges. No page in the tree is one today.
 
-The tree grows by category. A category guide is the eponymous page in its own
-directory, `docs/en/Guides/<Category>/<Category>.md`; a leaf sits in the folder named
-for its parent, `docs/en/Guides/<Category>/<Field>.md`. Tell hub from leaf by the path,
-before you touch a heading: a hub is an eponymous page (basename equals the containing
-folder) or the root; anything else is a leaf. A linked `### ` heading is a hub
+The hierarchy is THEMATIC. It is organized by subject and never by source, at every
+level: an area is a part of the field, a leaf is a topic of that area, and a page holds
+whatever the topic needs from every pool. So the same function and the same paclet
+recur across pages, each listing written for its page's angle, and that is correct, not
+a duplication to fix (see the cross-listing rules below). The layout follows the
+hierarchy: a leaf sits in the folder of the area that links it. Tell hub from leaf by
+the path, before you touch a heading: a hub is an eponymous page (basename equals the
+containing folder) or the root; anything else is a leaf. A linked `### ` heading is a hub
 construct: on a leaf it is not a cross-reference but a new parent-to-child edge, and
 adding one silently reparents that area in the hierarchy. Never replace a linked child
 heading with a plain topic heading while reorganizing a hub; the link is navigation
@@ -222,7 +233,16 @@ Body:
 
 - [`MultiwaySystem`](https://resources.wolframcloud.com/FunctionRepository/resources/MultiwaySystem/) (WFR) short description
 - `TransitiveReductionGraph` (WL) short description
+
+### WolframInstitute/Infrageometry
+
+- [`InfrageometryName`](https://github.com/WolframInstitute/Infrageometry) short description, and no tag: the heading carries the source
+- [`AnotherName`](https://github.com/WolframInstitute/Infrageometry) short description
 ```
+
+A body link on a hub is a heading, not a bullet: the same `## Functions` section, with
+`### [<Child Title>](paclet:WolframInstitute/WolframPhysics/guide/<Child>)` in place of
+each plain topic heading, and three to six representative bullets under it.
 
 Two tiers of entry, and how they interleave:
 
@@ -240,13 +260,39 @@ Two tiers of entry, and how they interleave:
   `reference.wolfram.com/language/guide/OperationsOnVectors.html` carry no prose);
   match that. The list holds more than one entry, ideally three or more, and ends in
   ` …` (a space, then the ellipsis character) when further unstated functions exist,
-  written as the root guide writes it: `` `A` (WL), `B` (WL), … ``. The converter
+  written as the guides write it: `` `A` (WL), `B` (WL), … ``. The converter
   appends a remainder made only of punctuation straight to the chips, so the close
   never becomes a description; anything else after the last chip does, and renders
   after a long dash. Never a one-item trailing list: a single commentless entry reads
   as an orphan. When a section would leave exactly one function for the tail, promote
   it into the annotated list above and give it a one-line description like the other
   entries.
+
+### Per-source subsections
+
+Where a page's topic draws a whole run of entries from one source, the source moves off
+the bullets and onto a heading. A tag on every bullet of such a run is noise: twenty
+consecutive `(WolframInstitute/Infrageometry)` tags say one thing twenty times.
+
+- A page's subsections run THEMATIC FIRST: the curated core of the topic, drawn from
+  every source and ordered by the subject, fundamentals first. A built-in there keeps
+  its `(WL)` marker, the one marker the house style always keeps, and an external entry
+  keeps its provenance tag where the subsection genuinely mixes sources.
+- Then come the per-source subsections, one for each source that gives this topic a run
+  of entries, roughly eight or more. The heading is the source, spelled exactly as the
+  inventory names it: `### WolframInstitute/Infrageometry`,
+  `### Wolfram/DiagrammaticComputation`, `### SetReplace`,
+  `### Wolfram Function Repository`, `### Wolfram Community`.
+- Inside a per-source subsection NO entry carries a tag. The heading says where
+  everything under it lives, and the entry forms are otherwise unchanged (a link whose
+  text is a code span, a plain-text title for a post or a paper). Its first bullet may
+  link the source's own page to say what it is.
+- A source that gives the topic only a handful of entries stays in the thematic
+  subsections, with its tag. Do not open a subsection for three bullets.
+- This is a labelling arrangement inside a page, not a reordering of the page. The
+  thematic subsections still hold what the topic is about; the per-source subsections
+  hold the rest of that source's vocabulary for this topic, and the page is still read
+  top to bottom as subject then source, never source alone.
 
 ### The three entry forms, and what the converter does with each
 
@@ -264,7 +310,7 @@ not a matter of taste:
   a chip. The bullet renders as guide text: the name as a code-styled hyperlink, the
   tag and description following as ordinary text, and no long-dash separator. That is
   the intended rendering for every function that lives outside this paclet and outside
-  the kernel, and the form the root guide uses. A link with plain text
+  the kernel, and the form the guides use. A link with plain text
   (`[WolframModel](https://…)`) converts too, but renders the name in text style; use
   the code-span form so an external function reads like the chips beside it.
 - A bullet is all chips or all links, never a mix. The chip-run parser stops at the
@@ -274,7 +320,8 @@ not a matter of taste:
   links as two bullets.
 
 The provenance tag in parentheses, right after the chip or link, is mandatory on every
-entry, in both tiers:
+entry of a thematic subsection, in both tiers. Under a per-source heading no entry
+carries one: the heading is the provenance of everything beneath it.
 
 | Pool | Form | Tag |
 | --- | --- | --- |
@@ -344,7 +391,10 @@ function is the entry.
   to survey them. Related areas sit adjacent. Within a section, place the most
   foundational entries first and intersperse the pools by relevance. Never group a
   section into a "resource functions block" then a "built-ins block"; that is the
-  source-sorting this format exists to remove.
+  source-sorting this format exists to remove. The per-source subsections are the one
+  exception, and a narrow one: they sit after the thematic subsections, they hold what
+  a single source adds beyond the topic's core, and they never stand in for that core.
+  A page whose every subsection is a source name has been sorted by source.
 - An entry MAY appear as a primary bullet under more than one section when it
   genuinely fits both (a multiway evolution function under running an evolution and
   again under the branchial graph): cross-listing is allowed, not a duplication error.
@@ -353,10 +403,14 @@ function is the entry.
   artifacts (an entry left in two places by a conflict resolution where only one
   placement was intended). When a repeat spans sections and each placement is
   topically justified, leave it.
-- When a topic straddles two guides, cross-list the entries the way the existing guides
-  do. Each page gets its own bullet, with a description written for that page's angle.
-  Do not mirror the whole section across both pages: a reader must not meet the same
-  vocabulary twice under two different descriptions. And do not reach for a
+- The same function, and the same paclet, MAY appear on several guides. The hierarchy
+  is thematic, so a function that three topics all reach for is listed on all three;
+  the placement question is always "does this page's subject need it", never "which
+  page owns it". When a topic straddles two guides, cross-list the entries the way the
+  existing guides do. Each page gets its own bullet, with a description written for
+  that page's angle. What is not allowed is mirroring a whole section across both
+  pages: that is one page written twice, and a reader meets the same run of vocabulary
+  under two different sets of descriptions. And do not reach for a
   `### [Area](paclet:…)` heading to pull the other guide's entries in: on a leaf page
   that heading is a hierarchy edge, not a cross-reference (see *Page format*). A
   `RelatedGuides` entry is the right way to point at the sibling page.
@@ -502,17 +556,20 @@ notebook as a visible, removable annotation).
 
 Work the topic as a content-organization problem, not a transcription job.
 
-1. Locate and orient. Read the research reports under `docs/research/` for every
-   source that covers the topic, the current guide, every parent overview once hubs
-   exist, the symbol pages under `docs/en/ReferencePages/Symbols/` and the tutorials
-   under `docs/en/Tutorials/`, so the guide's sections track what the paclet and the
-   ecosystem actually provide. Find the corresponding built-in system guide
+1. Locate and orient. Settle the page's role first, from its path (root, area hub,
+   leaf), because the role decides the template. Then read the research reports under
+   `docs/research/` for every source that covers the topic, the current page, its
+   parent hub and the root, its sibling leaves, the symbol pages under
+   `docs/en/ReferencePages/Symbols/` and the tutorials under `docs/en/Tutorials/`, so
+   the page's sections track what the paclet and the ecosystem actually provide, and
+   so a function a sibling already carries is placed knowingly rather than by
+   accident. Find the corresponding built-in system guide
    (`guide/GraphsAndNetworks` for the graph side) and the project's function guide;
-   their function lists are the completeness baseline you mirror and extend. Where a
-   category guide exists, its code (once there is any) lives at
-   `WolframPhysics/Kernel/<Category>/`, its tests at `WolframPhysics/Tests/<Category>/`
-   and its symbol pages under `docs/en/ReferencePages/Symbols/`: the guide that chips a
-   symbol decides its category.
+   their function lists are the completeness baseline you mirror and extend. An area's
+   code (once there is any) lives at `WolframPhysics/Kernel/<Area>/`, its tests at
+   `WolframPhysics/Tests/<Area>/` and its symbol pages under
+   `docs/en/ReferencePages/Symbols/`: the guide that chips a symbol decides its
+   category, and the area above that guide names it.
 
 2. Build the inventory from the three pools.
    - WolframPhysics symbols: the exported symbols, each placed under every topic it is
@@ -556,14 +613,21 @@ Work the topic as a content-organization problem, not a transcription job.
    guide page carves its field). Within each section, place the annotated bullets
    most-foundational first, interspersing the three pools by relevance and tagging each
    entry. Close the section with a trailing more-functions list holding its lesser-used
-   functions, chips in one bullet and links in another.
+   functions, chips in one bullet and links in another. Then count what each source
+   contributes: a source with a run of entries in this topic, roughly eight or more,
+   takes a per-source subsection of its own after the thematic ones, with no tag on its
+   entries; a source with a handful stays tagged in the thematic subsections. On a hub
+   there is no such pass: its subsections are its children, and its bullets are the few
+   that represent each.
 
 6. Write the abstract (see below), last, once the topics are settled.
 
 7. Synchronize the hierarchy and backlinks. Add or repair every intended body-link edge
    and reciprocal `RelatedGuides`, then check the complete guide set: `WolframPhysics`
-   is the sole root, every guide is reachable, and there are no cycles, duplicate
-   edges, or dangling local body-link targets. The filename basename, frontmatter
+   is the sole root, every guide is reachable from it through body links (a guide
+   nothing links lands at the end of the sidebar's top level, which is the symptom of a
+   heading that was dropped), and there are no cycles, duplicate edges, or dangling
+   local body-link targets. The filename basename, frontmatter
    `Name`, URI suffix, and every parent link target must agree and be unique across the
    tree. Refresh affected parent summaries. Every tutorial the guide names in
    `RelatedTutorials` names the guide back in its own `RelatedGuides`; every symbol
@@ -575,7 +639,7 @@ Work the topic as a content-organization problem, not a transcription job.
 8. Run the gates. From the repository root: `wolframscript -file scripts/lint_docs.wls`
    (clean, whole tree), then `python3 tools/dev/doc_symbols_check.py` (no chip links to
    a `ref/` page the paclet lacks, no dead `guide/` or `tutorial/` link), then
-   `python3 tools/dev/doc_links_check.py docs/en/Guides/<Name>.md` (every external
+   `python3 tools/dev/doc_links_check.py docs/en/Guides/<Area>/<Name>.md` (every external
    entry's link serves a page; a Wolfram resource address that redirects to a sign-in
    page names a resource that does not exist, which is how a Paclet Repository link for
    a paclet published only as a cloud resource fails). On a rename, also use `rg` to
@@ -593,10 +657,15 @@ Work the topic as a content-organization problem, not a transcription job.
    notebook under `WolframPhysics/Documentation/English/Guides/` is not in git, and
    `./build_docs.sh` writes it again before anything is published.
 
-The guide also drives the documentation site: `scripts/build_site.wls` reads its
-navigation from the markdown, with the root guide at the top, its `RelatedTutorials` in
-the order named, and the symbols the guides chip in the order introduced. The order you
-settle here is the sidebar's order.
+The guides also drive the documentation site: `scripts/build_site.wls` reads its
+navigation from the markdown, walking the body links from the root depth first, so the
+sidebar nests exactly as the pages link one another, with the areas under the root and
+the leaves under their area. A page reachable from two parents is shown under the
+first, and a page nothing links is shown at the end of the top level. The
+`RelatedTutorials` follow in the order named, and the symbols the guides chip in the
+order introduced. The order you settle here is the sidebar's order, and
+`DRYRUN=1 wolframscript -file scripts/build_site.wls local` prints it, nesting and all,
+without building anything.
 
 ## Writing the abstract
 
@@ -613,15 +682,21 @@ itself, not the paclet, the ecosystem or the Wolfram Language. Keep these rules:
 - Plain and straightforward prose, where every word earns its place; shorter is
   better. No performance adjectives.
 - Name the areas in the same order as the page's own sections, and name them all. The
-  abstract's topic sequence must track the `### ` headings top to bottom; write it
-  last, and read it against the section list before shipping.
+  abstract's topic sequence must track the page's thematic `### ` headings top to
+  bottom; write it last, and read it against the section list before shipping.
 - Fixing an existing abstract: lightly rewrite into this style while keeping as much
   of the original wording and substance as you can; this is an edit toward the style,
   not a rewrite from scratch. The reliable recipe: keep (or write) a one-sentence
   subject lead, then splice the existing topic list onto it ("X applies …, producing
   A; B; and C." or "X is …: A; B; and C.").
-- Category-level guides describe the areas they span the same way ("Multicomputation
-  spans A, B, and C.") and may close with "Each area has its own guide."
+- A hub, and the root, describe the areas they span the same way ("Multicomputation
+  spans A, B, and C."), naming the children in the order the linked headings name them,
+  and may close with "Each area has its own guide." A leaf's abstract names that leaf's
+  own subject and its `### ` topics, and never the area around it; the hub above it is
+  what places it.
+- A per-source subsection is not a topic, and never appears in an abstract. The
+  abstract names the subject; where a source's vocabulary lives is a fact about the
+  page's arrangement, not about the field.
 
 The target voice (note how each leads with the subject and names only topics):
 
