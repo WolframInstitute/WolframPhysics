@@ -1,6 +1,6 @@
 # Research directory
 
-Index of docs/research: the research reports behind the WolframInstitute/WolframPhysics guide page, the inventory built from them, and how to re-run the pipeline. Date: 2026-09-17.
+Index of docs/research: the research reports behind the WolframInstitute/WolframPhysics guide pages, the inventory built from them, the audit reports that check the pages against that inventory, and how to re-run the pipeline. Date: 2026-09-17; audit reports added 2026-09-21.
 
 ## Research files
 
@@ -24,6 +24,17 @@ One report per source. The row count is the number of records the normalization 
 | wolfram-institute.md | Wolfram Institute website, GitHub organization, Paclet Repository publisher, nikm cloud resources, fellows' Function Repository contributions and arXiv papers. | 746 |
 | wolframphysics-archives-notebooks.md | Working-material notebooks listed at wolframphysics.org/archives (1198 of 1649 read): every function, paclet symbol, cloud resource and recurring helper seen in them; cut off mid-way through a rate-limited bulk download and unverified. | 610 |
 | wolframphysics-org-site.md | wolframphysics.org and the cloud objects it links to (function guide pages, hands-on notebook, Registry of Notable Universe Models), the bulletins via the Wayback Machine and the two Gorard launch papers. | 492 |
+
+## Audit reports
+
+Reports written on 2026-09-21 against the 35 guide pages, after the split into the thematic hierarchy. They are audits of the pages and the inventory, not source sweeps: their rows were not normalized into function-inventory.md, and each records the kernel (WL 15.0, not cloud connected) and the fetch date behind every symbol and URL it names.
+
+| File | Scope |
+|---|---|
+| writings-function-repository-twins.md | The functions the guides list from Stephen Wolfram's writings, the bulletins, the technical introduction and the wolframphysics.org program files, each checked for a published Function Repository twin under the same or a near name; and the public repository functions those writings call that no page lists. |
+| hidden-paclet-functionality.md | Census of what the physics paclets export beyond their documented surface: undeclared symbols, experimental and optimization subcontexts, PackageScope, the properties their objects answer, and the exports of the GitHub-only Wolfram Institute paclets, each seen by Names in the kernel or in a PackageExport line. |
+| unlisted-functions-audit.md | Every inventory row with status seen checked against the 35 pages, a direct Function Repository search-API sweep of 134 terms and the Wolfram Physics Project category listing: what becomes an entry, what is cross-listed, and what stays off the pages with the reason. |
+| cross-listing-audit.md | Every entry of every page parsed and matched against each leaf's subject: the cross-listings proposed for functions that sit on one page and fit others, with the Function Repository twins of listed writings functions; a proposal, nothing changed on a page. |
 
 ## Inventory
 
