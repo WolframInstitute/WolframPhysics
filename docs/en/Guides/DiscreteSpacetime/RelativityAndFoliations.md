@@ -56,10 +56,19 @@ setting.
 - [`UniversalFoliation`](https://github.com/WolframInstitute/InfraCausality/blob/main/InfraCausality/Kernel/RelativisticMechanics.wl) (WolframInstitute/InfraCausality), [`UniversalTime`](https://github.com/WolframInstitute/InfraCausality/blob/main/InfraCausality/Kernel/RelativisticMechanics.wl) (WolframInstitute/InfraCausality) the universal foliation of a causal graph and the universal time it assigns to each event
 - [`foliateWolframModelEvolutionObject`](https://www.wolframcloud.com/obj/wolframphysics/Blogs/FourthParadigm/HelperFunctions) (Writings) an evolution object with its events reordered according to a foliation given as slices of event indices
 - [`VisualizeFoliatedCausalGraph`](https://github.com/WolframInstitute/InfraCausality/blob/main/InfraCausality/Kernel/Visualization.wl) (WolframInstitute/InfraCausality) a foliation of a causal graph rendered as colored slices, with its chains drawn on top
+- [`FoliationDiagram`](https://www.wolframcloud.com/obj/wolframphysics/Blogs/FourthParadigm/HelperFunctions) (Writings) a diagram of a foliation, the reference frame an observer places on a causal graph
+- [`GraphFoliationLayout`](https://www.wolframcloud.com/obj/wolframphysics/Blogs/FourthParadigm/HelperFunctions) (Writings) a layout of a graph that places each slice of a foliation on its own level
+- [`FoliatedGraph`](https://www.wolframcloud.com/obj/wolframphysics/Blogs/FourthParadigm/HelperFunctions) (Writings) a graph with a foliation drawn over it, its slices marked
 - [`drawFoliation`](https://www.wolframcloud.com/obj/wolframphysics/TechPaper-Programs/Section-05/FoliationLines.wl) (wolframphysics.org) a graph shown with foliation lines drawn between successive vertex lists
 - [`straightFoliationLines`](https://www.wolframcloud.com/obj/wolframphysics/TechPaper-Programs/Section-05/FoliationLines.wl) (wolframphysics.org) graphics primitives for a grid of straight foliation lines with given densities and slopes
 - [`diamondCausalGraphPlot`](https://www.wolframcloud.com/obj/wolframphysics/TechPaper-Programs/Section-05/CausalFoliations-01.wl) (wolframphysics.org) a regular diamond-shaped causal graph of given depth, drawn with its straight foliation lines
 - [`regularCausalGraphPlot`](https://www.wolframcloud.com/obj/wolframphysics/TechPaper-Programs/Section-08/regularCausalGraphPlot.wl) (wolframphysics.org) a regular grid-like causal graph with random extra edges, drawn with straight foliation lines
+- [`foliationLines`](https://www.wolframcloud.com/obj/wolframphysics/TechPaper-Programs/Section-08/regularCausalGraphPlot.wl) (wolframphysics.org) graphics primitives for straight foliation lines, with separate styles for the two families
+- [`foliationGraphics`](https://www.wolframcloud.com/obj/wolframphysics/TechPaper-Programs/Section-08/QM-foliations-01.wl) (wolframphysics.org) foliation line graphics for a graph and its vertex lists, with optional gaps between the slices
+- [`caFoliationLines`](https://www.wolframcloud.com/obj/wolframphysics/TechPaper-Programs/Section-07/CausalGraph-Foliation.wl) (wolframphysics.org) foliation lines of the light cone shape, for the causal graph of a cellular automaton
+- [Causal foliations programs](https://www.wolframcloud.com/obj/wolframphysics/TechPaper-Programs/Section-05/CausalFoliations-01.wl) (wolframphysics.org) the technical introduction program file with regular diamond-shaped causal graphs, straight foliation lines and the Lorentz boost of a spacetime point
+- [Foliation lines programs](https://www.wolframcloud.com/obj/wolframphysics/TechPaper-Programs/Section-05/FoliationLines.wl) (wolframphysics.org) the technical introduction program file that draws foliation lines between the slices of a causal graph
+- [Straight foliation programs](https://www.wolframcloud.com/obj/wolframphysics/TechPaper-Programs/Section-08/QM-straightfoliations-01.wl) (wolframphysics.org) the program file that draws straight foliation lines at chosen densities and slopes
 
 ### Coordinates and Observer Chains
 
@@ -68,6 +77,7 @@ setting.
 - [`CoordinatizedCausalGraph`](https://github.com/WolframInstitute/Infrageometry/blob/main/Infrageometry/Kernel/Chains.wl) (WolframInstitute/Infrageometry) the reduced causal graph drawn at those coordinates, with the observer chains highlighted
 - [`RadarCoordinates`](https://github.com/WolframInstitute/Infrageometry) (WolframInstitute/Infrageometry) the distances from an event to a basis of reference events, the coordinates radar signals assign it
 - [`SimpleCausalGraphCoordinates`](https://resources.wolframcloud.com/FunctionRepository/resources/SimpleCausalGraphCoordinates/) (WFR) Cartesian-like coordinates for a simple two-dimensional causal graph
+- [`Coordinatize`](https://www.wolframcloud.com/obj/nikm/DeployedResources/Function/Coordinatize) (Wolfram Cloud) the coordinates of the events of a causal graph with respect to an observer chain, with an optional foliation
 - [`ChainProjection`](https://github.com/WolframInstitute/InfraCausality/blob/main/InfraCausality/Kernel/RelativisticDynamics.wl) (WolframInstitute/InfraCausality) the fraction of the events of one chain whose forward reach lands on another, the projection two observers make of each other
 
 ### Discrete Cauchy Surfaces
@@ -98,6 +108,8 @@ setting.
 - [`SolveEinsteinEquations`](https://resources.wolframcloud.com/FunctionRepository/resources/SolveEinsteinEquations/) (WFR) whether a stress-energy tensor field solves the Einstein field equations for a given metric
 - [`DiscreteHypersurfaceDecomposition`](https://resources.wolframcloud.com/FunctionRepository/resources/DiscreteHypersurfaceDecomposition/) (WFR) a Riemannian or pseudo-Riemannian manifold decomposed into a union of discrete hypersurfaces
 - [`HGBrillLindquist`](https://github.com/WolframInstitute/HypergraphRewritingEngine) (WolframInstitute/HypergraphRewriteEngine) a Brill-Lindquist initial condition, the discrete spacetime around two black holes
+- [`HGLensingPlot`](https://github.com/WolframInstitute/HypergraphRewritingEngine/blob/v0.0.1-alpha.5/paclet/Kernel/HypergraphRewriting.wl) (WolframInstitute/HypergraphRewriteEngine) deflection angle against impact parameter in an evolution, with the general relativistic prediction overlaid
+- [`HGRotationCurvePlot`](https://github.com/WolframInstitute/HypergraphRewritingEngine/blob/v0.0.1-alpha.5/paclet/Kernel/HypergraphRewriting.wl) (WolframInstitute/HypergraphRewriteEngine) orbital velocity against radius in an evolution, with the Keplerian prediction overlaid
 
 ### WolframInstitute/Gravitas
 
@@ -126,15 +138,24 @@ setting.
 - [`SolveVacuumADMEquations`](https://resources.wolframcloud.com/FunctionRepository/resources/SolveVacuumADMEquations/) whether an ADM decomposition solves the vacuum ADM evolution equations
 - [`CausalGraphEntanglementEntropyNaive`](https://resources.wolframcloud.com/FunctionRepository/resources/CausalGraphEntanglementEntropyNaive/) the entanglement entropy of a subgraph of a causal graph by the naive approach
 - [`FoliationClass`](https://resources.wolframcloud.com/FunctionRepository/resources/FoliationClass/) the foliation set generated from a causal graph
+- [`SetPartitions`](https://resources.wolframcloud.com/FunctionRepository/resources/SetPartitions/) all partitions of a set into blocks, the raw material of a foliation enumeration
 
 ### WolframInstitute/InfraCausality
 
 - [WolframInstitute/InfraCausality](https://github.com/WolframInstitute/InfraCausality) a paclet for causal structure and special relativity on finite directed graphs
+- [`FindChain`](https://github.com/WolframInstitute/InfraCausality/blob/main/InfraCausality/Kernel/InfraCausality.wl) chains between two vertices of a causal graph, the worldlines of observers
+- [`ForwardLightCone`](https://github.com/WolframInstitute/InfraCausality/blob/main/InfraCausality/Kernel/RelativisticMechanics.wl) the future light cone of an event as a set of events, out to a given length
+- [`BackwardLightCone`](https://github.com/WolframInstitute/InfraCausality/blob/main/InfraCausality/Kernel/RelativisticMechanics.wl) the past light cone of an event as a set of events, out to a given length
+- [`OutgoingLightRays`](https://github.com/WolframInstitute/InfraCausality/blob/main/InfraCausality/Kernel/RelativisticMechanics.wl) the outgoing light rays of an event, the events lying on its future null geodesics
+- [`IncomingLightRays`](https://github.com/WolframInstitute/InfraCausality/blob/main/InfraCausality/Kernel/RelativisticMechanics.wl) the incoming light rays of an event, the events lying on its past null geodesics
 - [`ChainLightReach`](https://github.com/WolframInstitute/InfraCausality/blob/main/InfraCausality/Kernel/RelativisticDynamics.wl) the joint future light front of a chain, the union of the outgoing light rays of its events
 - [`InfraEnergy`](https://github.com/WolframInstitute/InfraCausality/blob/main/InfraCausality/Kernel/RelativisticDynamics.wl), [`InfraMomentum`](https://github.com/WolframInstitute/InfraCausality/blob/main/InfraCausality/Kernel/RelativisticDynamics.wl) the Knuth energy and momentum formed from a pair of chain projections read as light-cone coordinates
 - [`InfraMass`](https://github.com/WolframInstitute/InfraCausality/blob/main/InfraCausality/Kernel/RelativisticDynamics.wl), [`InfraInterval`](https://github.com/WolframInstitute/InfraCausality/blob/main/InfraCausality/Kernel/RelativisticDynamics.wl), [`InfraVelocity`](https://github.com/WolframInstitute/InfraCausality/blob/main/InfraCausality/Kernel/RelativisticDynamics.wl) the mass, the squared interval and the velocity the same pair of projections gives
 - [`KFactor`](https://github.com/WolframInstitute/InfraCausality/blob/main/InfraCausality/Kernel/BondiKCalculus.wl) the Bondi k-factor of a relative velocity, the Doppler ratio a light signal picks up between two worldlines
 - [`WorldlineAngle`](https://github.com/WolframInstitute/InfraCausality/blob/main/InfraCausality/Kernel/BondiKCalculus.wl), [`ProperTimeScale`](https://github.com/WolframInstitute/InfraCausality/blob/main/InfraCausality/Kernel/BondiKCalculus.wl) the angle of a worldline of given velocity in a Bondi diagram, and the proper time per unit length along it
+- [`WorldlineDirection`](https://github.com/WolframInstitute/InfraCausality/blob/main/InfraCausality/Kernel/BondiKCalculus.wl), [`WorldlineNormal`](https://github.com/WolframInstitute/InfraCausality/blob/main/InfraCausality/Kernel/BondiKCalculus.wl) the unit direction of a worldline of given velocity in a Bondi diagram, and the in-plane normal to it
+- [`WorldlinePoint`](https://github.com/WolframInstitute/InfraCausality/blob/main/InfraCausality/Kernel/BondiKCalculus.wl), [`WorldlinePointAtProperTime`](https://github.com/WolframInstitute/InfraCausality/blob/main/InfraCausality/Kernel/BondiKCalculus.wl) the point on a worldline at a given Euclidean arc length from the origin, and at a given proper time
+- [`LightDirection`](https://github.com/WolframInstitute/InfraCausality/blob/main/InfraCausality/Kernel/BondiKCalculus.wl) the unit vector of a light ray at an angle to the vertical, right going or left going
 - [`LightZigzag`](https://github.com/WolframInstitute/InfraCausality/blob/main/InfraCausality/Kernel/BondiKCalculus.wl) the events of a light signal bouncing between two worldlines
 - [`BondiClock`](https://github.com/WolframInstitute/InfraCausality/blob/main/InfraCausality/Kernel/BondiVisualization.wl) two worldlines with a light signal bouncing between them, ticked by proper time
 - [`DopplerConstruction`](https://github.com/WolframInstitute/InfraCausality/blob/main/InfraCausality/Kernel/BondiVisualization.wl), [`TimeDilationConstruction`](https://github.com/WolframInstitute/InfraCausality/blob/main/InfraCausality/Kernel/BondiVisualization.wl) the Bondi diagrams of the relativistic Doppler shift and of time dilation
@@ -158,3 +179,7 @@ setting.
 - [Gravitational radiation in discrete spacetimes](https://community.wolfram.com/t/24193) the radiative behavior of discrete spacetime structures under Wolfram model evolution
 - [Finding gravitational waves in Wolfram Models](https://community.wolfram.com/t/16376) the search for gravitational waves in the evolution of a Wolfram model
 - [Geodesic congruence in causal graphs](https://community.wolfram.com/t/25007) the geodesics between events of a causal graph and the congruences they fall into
+- [Relativistic mass transformations from simple causal graph](https://community.wolfram.com/t/17402) Lorentz boosts of the foliation of a causal graph, built on the foliation programs of the technical introduction
+- [On motion and special relativity in Wolfram Models](https://community.wolfram.com/t/24206) relativistically coherent Wolfram models, the ones that transform from one reference frame to another
+- [The equivalence principle, hyperbolic geometry and gyrogeometry](https://community.wolfram.com/t/24196) Lorentz and Rindler coordinates on causal graph foliations, for accelerated frames
+- [Hunting for black holes](https://community.wolfram.com/t/16372) black hole detection in Wolfram models from the causal connection graph

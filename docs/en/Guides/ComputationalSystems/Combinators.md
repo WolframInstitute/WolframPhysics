@@ -43,6 +43,7 @@ expressions encode.
 - [`CombinatorFixedPoint`](https://resources.wolframcloud.com/FunctionRepository/resources/CombinatorFixedPoint/) (WFR) the evolution of a combinator expression to its fixed point under given rules and an evaluation scheme
 - [`CombinatorFinalExpression`](https://github.com/maxitg/CombinatorEvolve) (CombinatorEvolve) the final expression after a number of rewrites of a combinator expression, computed by a native combinator evaluator
 - [`CombinatorLeafCounts`](https://github.com/maxitg/CombinatorEvolve) (CombinatorEvolve) the leaf count of the state after each rewrite, the growth of an evolution step by step
+- [`CombinatorLeftmostOutermostLeafCounts`](https://github.com/maxitg/CombinatorEvolve/blob/master/Kernel/CombinatorLeftmostOutermostLeafCounts.m) (CombinatorEvolve) the leaf counts along a leftmost-outermost evolution under any combinator rules, computed by the native combinator evaluator
 - [`SCombinatorHaltsQ`](https://resources.wolframcloud.com/FunctionRepository/resources/SCombinatorHaltsQ/) (WFR) whether the evolution of an S combinator expression halts
 
 - `FixedPoint` (WL), `FixedPointList` (WL), `Nest` (WL), `NestList` (WL), `NestWhile` (WL), `NestWhileList` (WL), `ReplaceRepeated` (WL), `FindRepeat` (WL), …
@@ -50,8 +51,8 @@ expressions encode.
 ### Multiway Combinators and Causal Graphs
 
 - [`MultiwayCombinator`](https://resources.wolframcloud.com/FunctionRepository/resources/MultiwayCombinator/) (WFR) the states graph of a combinator expression under every choice of redex, the evaluation orders of the expression as branches
-- [`MWCombinatorGraph`](https://www.wolframcloud.com/obj/sw-blog/Combinators/Programs.wl) (Writings) the multiway states graph of a combinator expression with the leftmost-outermost or a chosen evaluation path highlighted
-- [`CombinatorCausalGraph`](https://www.wolframcloud.com/obj/sw-blog/Combinators/Programs.wl) (Writings) the causal graph of a combinator evolution under a given evaluation scheme
+- [`MWCombinatorGraph`](https://www.wolframcloud.com/obj/sw-blog/Combinators/Programs.wl) (Writings) the multiway states graph of a combinator expression with the leftmost-outermost or a chosen evaluation path highlighted, published on the Function Repository as [`CombinatorEvolutionGraph`](https://resources.wolframcloud.com/FunctionRepository/resources/CombinatorEvolutionGraph/)
+- [`CombinatorCausalGraph`](https://www.wolframcloud.com/obj/sw-blog/Combinators/Programs.wl) (Writings) the causal graph of a combinator evolution under a given evaluation scheme, published on the Function Repository as [`CombinatorEvolutionGraph`](https://resources.wolframcloud.com/FunctionRepository/resources/CombinatorEvolutionGraph/)
 - [`CombinatorGlocalMultiwaySystem`](https://resources.wolframcloud.com/FunctionRepository/resources/CombinatorGlocalMultiwaySystem/) (WFR) a combinator expression evaluated as a glocal multiway system, global events over the individual tokens of a local one
 - [`CombinatorGlocalBranchialGraph`](https://resources.wolframcloud.com/FunctionRepository/resources/CombinatorGlocalBranchialGraph/) (WFR) the branch pair ancestry of a glocal combinator evaluation as a branchial graph
 
@@ -62,6 +63,7 @@ expressions encode.
 - [`FromCombinator`](https://www.wolframcloud.com/obj/wolframinstitute/DeployedResources/Paclet/WolframInstitute/PureMath/Documentation/ref/FromCombinator.html) (WolframInstitute/PureMath) an SKI combinator term expanded to its defining lambda term, each of S, K and I replaced by its lambda definition
 - [`SKCombinatorCompile`](https://resources.wolframcloud.com/FunctionRepository/resources/SKCombinatorCompile/) (WFR) an ordinary expression represented in terms of the S and K combinators
 - [`CombinatorLambda`](https://resources.wolframcloud.com/PacletRepository/resources/Wolfram/Lambda/ref/CombinatorLambda.html) (Wolfram/Lambda), [`LambdaCombinator`](https://resources.wolframcloud.com/PacletRepository/resources/Wolfram/Lambda/ref/LambdaCombinator.html) (Wolfram/Lambda) a combinator term turned into a lambda term, and a lambda term converted to a combinator
+- [`$LambdaCombinatorStore`](https://resources.wolframcloud.com/PacletRepository/resources/Wolfram/Lambda/ref/%24LambdaCombinatorStore.html) (Wolfram/Lambda) an entity store of named lambda combinators, the standard combinators as lambda terms
 - [`LambdaTerm`](https://www.wolframcloud.com/obj/wolframinstitute/DeployedResources/Paclet/WolframInstitute/PureMath/Documentation/ref/LambdaTerm.html) (WolframInstitute/PureMath) the canonical lambda term of an expression, the form bracket abstraction compiles away
 
 - [`FindMinimalLambdaCombinator`](https://resources.wolframcloud.com/PacletRepository/resources/Wolfram/Lambda/ref/FindMinimalLambdaCombinator.html) (Wolfram/Lambda), [`FindMinimalCombinatorLambda`](https://github.com/WolframInstitute/WolframLambda/blob/main/Kernel/Evaluation.wl) (Wolfram/Lambda), [`LambdaCombinatorY`](https://www.wolframcloud.com/obj/wolframinstitute/DeployedResources/Paclet/WolframInstitute/PureMath/Documentation/ref/LambdaCombinatorY.html) (WolframInstitute/PureMath), …
@@ -70,6 +72,7 @@ expressions encode.
 
 - [`EnumerateCombinators`](https://resources.wolframcloud.com/FunctionRepository/resources/EnumerateCombinators/) (WFR) all combinator expressions with a given number of symbols
 - `Groupings` (WL) every way of bracketing a sequence of symbols, the application structures a combinator expression can take
+- [`ParenthesesTrees`](https://resources.wolframcloud.com/FunctionRepository/resources/ParenthesesTrees/) (WFR) the syntax trees consistent with a pattern of parentheses
 - [`RandomCombinator`](https://resources.wolframcloud.com/FunctionRepository/resources/RandomCombinator/) (WFR) a pseudorandom combinator expression
 - [`CombinatorEncode`](https://resources.wolframcloud.com/FunctionRepository/resources/CombinatorEncode/) (WFR) an SK combinator expression encoded as a list of 0s and 1s
 
@@ -93,6 +96,7 @@ expressions encode.
 - [`SKCombinatorLeftmostOutermostFinalExpression`](https://resources.wolframcloud.com/FunctionRepository/resources/SKCombinatorLeftmostOutermostFinalExpression/) the final state of the leftmost-outermost evolution of an SK combinator expression
 - [`SKCombinatorLeftmostOutermostLeafCounts`](https://resources.wolframcloud.com/FunctionRepository/resources/SKCombinatorLeftmostOutermostLeafCounts/) the successive leaf counts of a leftmost-outermost evolution
 - [`CombinatorEvolutionGraph`](https://resources.wolframcloud.com/FunctionRepository/resources/CombinatorEvolutionGraph/) the state transformations and the causal structure of a combinator evolution in one graph
+- [`TraceCausalGraph`](https://resources.wolframcloud.com/FunctionRepository/resources/TraceCausalGraph/) the causal graph of an expression evaluation, built from its evaluation trace
 - [`CombinatorExpressionGraph`](https://resources.wolframcloud.com/FunctionRepository/resources/CombinatorExpressionGraph/) the expression graph of a combinator expression
 - [`CombinatorToDAG`](https://resources.wolframcloud.com/FunctionRepository/resources/CombinatorToDAG/) a combinator expression as a directed acyclic graph, its repeated subexpressions shared
 - [`CombinatorPlot`](https://resources.wolframcloud.com/FunctionRepository/resources/CombinatorPlot/) a static combinator expression drawn
@@ -104,15 +108,15 @@ expressions encode.
 ### Writings
 
 - [Combinators program file](https://www.wolframcloud.com/obj/sw-blog/Combinators/Programs.wl) the package accompanying the combinators bulletin, holding the functions below
-- [`CombinatorFromString`](https://www.wolframcloud.com/obj/sw-blog/Combinators/Programs.wl) a combinator expression parsed from a string such as `"s[k][s]"`
-- [`FunctionToApplication`](https://www.wolframcloud.com/obj/sw-blog/Combinators/Programs.wl) nested function applications rewritten in terms of `Application`
-- [`EvaluationOrderSort`](https://www.wolframcloud.com/obj/sw-blog/Combinators/Programs.wl) the positions of an expression sorted by an evaluation scheme, leftmost or rightmost, outermost or innermost
+- [`CombinatorFromString`](https://www.wolframcloud.com/obj/sw-blog/Combinators/Programs.wl) a combinator expression parsed from a string such as `"s[k][s]"`, the published [`CombinatorConvert`](https://resources.wolframcloud.com/FunctionRepository/resources/CombinatorConvert/) covers it
+- [`FunctionToApplication`](https://www.wolframcloud.com/obj/sw-blog/Combinators/Programs.wl) nested function applications rewritten in terms of `Application`, the published [`CombinatorConvert`](https://resources.wolframcloud.com/FunctionRepository/resources/CombinatorConvert/) covers it
+- [`EvaluationOrderSort`](https://www.wolframcloud.com/obj/sw-blog/Combinators/Programs.wl) the positions of an expression sorted by an evaluation scheme, leftmost or rightmost, outermost or innermost, published on the Function Repository as [`TraversalOrderSelect`](https://resources.wolframcloud.com/FunctionRepository/resources/TraversalOrderSelect/)
 - [`CombinatorTerminatedQ`](https://www.wolframcloud.com/obj/sw-blog/Combinators/Programs.wl) whether a combinator expression has no match left to contract
-- [`MWCombinatorGraphMinimal`](https://www.wolframcloud.com/obj/sw-blog/Combinators/Programs.wl) the multiway combinator graph in a minimal style, node sizes and a highlighted evaluation path
+- [`MWCombinatorGraphMinimal`](https://www.wolframcloud.com/obj/sw-blog/Combinators/Programs.wl) the multiway combinator graph in a minimal style, node sizes and a highlighted evaluation path, published on the Function Repository as [`CombinatorEvolutionGraph`](https://resources.wolframcloud.com/FunctionRepository/resources/CombinatorEvolutionGraph/)
 - [`SKDAGList`](https://www.wolframcloud.com/obj/sw-blog/Combinators/Programs.wl) the DAGs of the successive states of an evolution, joined by evolution edges
 - [`EquivalenceGroups`](https://www.wolframcloud.com/obj/sw-blog/Combinators/Programs.wl) the S combinator expressions of a given size grouped by the fixed point they reach
 - [`SCombinatorAutomatonTreeGeneral`](https://www.wolframcloud.com/obj/sw-blog/Combinators/Programs.wl) the expression graph of an S combinator expression evaluated by a table automaton from the leaves
-- [`MatchedBracketsPlot`](https://www.wolframcloud.com/obj/sw-blog/Combinators/Programs.wl) the bracket structure of a combinator expression drawn as a mountain, vee, bush or binary tree picture
+- [`MatchedBracketsPlot`](https://www.wolframcloud.com/obj/sw-blog/Combinators/Programs.wl) the bracket structure of a combinator expression drawn as a mountain, vee, bush or binary tree picture, published on the Function Repository as [`CombinatorBracketsPlot`](https://resources.wolframcloud.com/FunctionRepository/resources/CombinatorBracketsPlot/)
 
 - [`MountainGraphic`](https://www.wolframcloud.com/obj/sw-blog/Combinators/Programs.wl), [`VeeGraphic`](https://www.wolframcloud.com/obj/sw-blog/Combinators/Programs.wl), [`BushGraphic`](https://www.wolframcloud.com/obj/sw-blog/Combinators/Programs.wl), [`BinaryTreeGraphic`](https://www.wolframcloud.com/obj/sw-blog/Combinators/Programs.wl), [`SCombinatorAutomatonTree`](https://www.wolframcloud.com/obj/sw-blog/Combinators/Programs.wl), …
 

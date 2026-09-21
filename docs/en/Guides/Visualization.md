@@ -37,6 +37,8 @@ into three dimensions.
 ### Evolutions as Arrays, Filmstrips and Animations
 
 - `ArrayPlot` (WL) the values of an array shown as a discrete array of squares, the picture of a cellular automaton or substitution system evolution
+- [`CellularAutomatonPlot`](https://github.com/WolframInstitute/CellularAutomaton/blob/main/CellularAutomaton/Kernel/Visualizations.wl) (WolframInstitute/CellularAutomaton) the evolution of a one-dimensional rule drawn as an array of colored cells
+- [`NetworkSystemEvolutionPlot`](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/NetworkSystem/ref/NetworkSystemEvolutionPlot.html) (WolframInstitute/NetworkSystem) the evolution of a two-link neighbor-dependent network system drawn step by step
 - [`WolframModelHistoryPlots`](https://www.wolframcloud.com/obj/wolframphysics/Blogs/FourthParadigm/HelperFunctions) (Writings) the states of a Wolfram model evolution plotted with the newly created edges highlighted
 - [`HGDimensionFilmstrip`](https://github.com/WolframInstitute/HypergraphRewritingEngine) (WolframInstitute/HypergraphRewriteEngine) a grid of the timestep union graphs of an evolution, colored by dimension
 - [`HGGeodesicFilmstrip`](https://github.com/WolframInstitute/HypergraphRewritingEngine) (WolframInstitute/HypergraphRewriteEngine) the geodesic plots of an evolution, one list of plots per timestep
@@ -50,11 +52,19 @@ into three dimensions.
 ### States, Causal, Multiway and Branchial Graphs
 
 - `LayeredGraphPlot` (WL), `LayeredGraphPlot3D` (WL) a layered plot of a graph in two or three dimensions, the layout of causal, multiway and branchial graphs
+- `LayeredGraph3D` (WL) a graph whose vertices are placed by a layered layout in three dimensions, the 3D form of a causal or multiway graph
+- [`HasseDiagram`](https://www.wolframcloud.com/obj/wolframinstitute/DeployedResources/Paclet/WolframInstitute/PureMath/Documentation/ref/HasseDiagram.html) (WolframInstitute/PureMath) the Hasse diagram of a poset as a graph, lesser elements laid out below greater ones
+- [`HasseDiagram`](https://resources.wolframcloud.com/FunctionRepository/resources/HasseDiagram/) (WFR) the Hasse diagram of a poset drawn as a graph
 - `GraphLayout` (WL) the option choosing the layout used to draw a graph
 - `VertexCoordinates` (WL) the option giving the coordinates at which the vertices of a graph are placed
+- `GraphEmbedding` (WL) the vertex coordinates of a graph as laid out
 - `HighlightGraph` (WL) a graph with chosen vertices, edges or subgraphs highlighted, a geodesic or a light cone marked on a spatial or causal graph
+- [`InfraSceneHighlight`](https://github.com/WolframInstitute/SyntheticInfrageometry/blob/main/SyntheticInfrageometry/Kernel/Usage.wl) (WolframInstitute/SyntheticInfrageometry) shapes drawn diffusely on a graph, intensity scaling with multiplicity and colors blending across objects
 - [`wolframModelShapeFunction`](https://www.wolframcloud.com/obj/wolframphysics/BlogHelpers) (Writings) a vertex shape function rendering a hypergraph vertex with `WolframModelPlot` in a framed inset, for a multiway graph whose states are hypergraphs
+- [`$StateVertexShapeFunction`](https://github.com/WolframInstitute/Multicomputation/blob/master/Multicomputation/Kernel/Multi/MultiwaySystem.m) (Wolfram/Multicomputation) the vertex shape function that draws the states of a multiway system of a given type, strings, hypergraphs or cell arrays, inside its graphs
+- [`$EventVertexShapeFunction`](https://github.com/WolframInstitute/Multicomputation/blob/master/Multicomputation/Kernel/Multi/MultiwaySystem.m) (Wolfram/Multicomputation) the vertex shape function that draws the events of a multiway system inside its causal and token-event graphs
 - `GraphValuePlot` (WL) values over the vertices or edges of a graph plotted on it
+- `CommunityGraphPlot` (WL) a plot of a graph showing its community structure
 
 - `GraphPlot` (WL), `GraphPlot3D` (WL), `Graph3D` (WL), `TreePlot` (WL), `TreeLayout` (WL), `TreeElementLabel` (WL), `TreeElementStyle` (WL), …
 
@@ -81,7 +91,10 @@ into three dimensions.
 
 - [`MultiPerspectiveEmbedding`](https://resources.wolframcloud.com/FunctionRepository/resources/MultiPerspectiveEmbedding/) (WFR), [`MultiPerspectiveEmbeddingViewer`](https://resources.wolframcloud.com/FunctionRepository/resources/MultiPerspectiveEmbeddingViewer/) (WFR) a 3D embedding of several graphs preserving all their pairwise distances simultaneously along various 2D projections, and its interactive viewer
 - [`ComplexEmbedding`](https://github.com/WolframInstitute/Infrageometry) (WolframInstitute/Infrageometry) a numerical embedding of a simplicial complex in two or three dimensions by energy minimization
+- [`HighlightComplex`](https://github.com/WolframInstitute/Infrageometry/blob/main/Infrageometry/Kernel/Mesh.wl) (WolframInstitute/Infrageometry) the mesh of a complex rendered with chosen simplices highlighted
+- [`HighlightCellOrientations`](https://github.com/WolframInstitute/Infrageometry/blob/main/Infrageometry/Kernel/Mesh.wl) (WolframInstitute/Infrageometry) the top dimensional cells of a mesh colored by orientation sign
 - [`UniformLengthEmbedding`](https://github.com/WolframInstitute/Infrageometry) (WolframInstitute/Infrageometry) an embedding of a graph in which every edge is a unit segment
+- [`InfraSceneViewer`](https://github.com/WolframInstitute/SyntheticInfrageometry/blob/main/SyntheticInfrageometry/Kernel/Usage.wl) (WolframInstitute/SyntheticInfrageometry) an interactive step-by-step view of a scene and the figures constructed in it on a graph
 
 - [`VisualizeFiberedGraph`](https://github.com/WolframInstitute/InfraGaugeTheory) (WolframInstitute/InfraGaugeTheory), [`FiberedGraphViewer`](https://github.com/WolframInstitute/InfraGaugeTheory) (WolframInstitute/InfraGaugeTheory), [`RandomFiberedGraphViewer`](https://github.com/WolframInstitute/InfraGaugeTheory) (WolframInstitute/InfraGaugeTheory), [`PointViewer`](https://github.com/WolframInstitute/SyntheticInfrageometry) (WolframInstitute/SyntheticInfrageometry), [`SegmentViewer`](https://github.com/WolframInstitute/SyntheticInfrageometry) (WolframInstitute/SyntheticInfrageometry), [`ShellViewer`](https://github.com/WolframInstitute/SyntheticInfrageometry) (WolframInstitute/SyntheticInfrageometry), [`CircleViewer`](https://github.com/WolframInstitute/SyntheticInfrageometry) (WolframInstitute/SyntheticInfrageometry), …
 
@@ -94,6 +107,14 @@ into three dimensions.
 - [`GraphFunctionPlot`](https://resources.wolframcloud.com/FunctionRepository/resources/GraphFunctionPlot/) the values of a function at the vertices of a graph
 - [`MultiwayEvolutionPlot`](https://resources.wolframcloud.com/FunctionRepository/resources/MultiwayEvolutionPlot/) a plot of the evolution of a string multiway system
 - [`SubstitutionSystemCausalPlot`](https://resources.wolframcloud.com/FunctionRepository/resources/SubstitutionSystemCausalPlot/) a plot of the causal features of a substitution system evolution
+- [`SubstitutionSystemPlot`](https://resources.wolframcloud.com/FunctionRepository/resources/SubstitutionSystemPlot/) the evolution of a one-dimensional neighbor-independent substitution system drawn as nested cells
+- [`MobileAutomatonPlot`](https://resources.wolframcloud.com/FunctionRepository/resources/MobileAutomatonPlot/) the evolution of a mobile automaton drawn with the active cell marked
+- [`CombinatorEvolutionPlot`](https://resources.wolframcloud.com/FunctionRepository/resources/CombinatorEvolutionPlot/) the evolution of a combinator expression drawn step by step
+- [`CombinatorPlot`](https://resources.wolframcloud.com/FunctionRepository/resources/CombinatorPlot/) a static combinator expression drawn
+- [`LSystemPlot`](https://resources.wolframcloud.com/FunctionRepository/resources/LSystemPlot/) an L-system drawn as the path its turtle instructions trace
+- [`SubstitutionSystemRulePlot`](https://resources.wolframcloud.com/FunctionRepository/resources/SubstitutionSystemRulePlot/) the rule icon of a one-dimensional neighbor-independent substitution system
+- [`MobileAutomatonRulePlot`](https://resources.wolframcloud.com/FunctionRepository/resources/MobileAutomatonRulePlot/) the rule icon of a mobile automaton
+- [`TagSystemRulePlot`](https://resources.wolframcloud.com/FunctionRepository/resources/TagSystemRulePlot/) the rule icon of a tag system
 - [`MultispacePlot3D`](https://resources.wolframcloud.com/FunctionRepository/resources/MultispacePlot3D/) multispace plotted in three dimensions
 - [`DragGraphVertices`](https://resources.wolframcloud.com/FunctionRepository/resources/DragGraphVertices/) the vertices of a graph dragged around dynamically
 - [`PairwiseMultidimensionalScaling`](https://resources.wolframcloud.com/FunctionRepository/resources/PairwiseMultidimensionalScaling/) pairwise distances embedded into a Cartesian space by multidimensional scaling
@@ -124,6 +145,7 @@ into three dimensions.
 - [`scaleGraph`](https://www.wolframcloud.com/obj/wolframphysics/Blogs/FourthParadigm/HelperFunctions) the vertex sizes of a graph whose vertices are graphics, rescaled to keep their aspect ratios
 - [`treeLayout`](https://www.wolframcloud.com/obj/wolframphysics/BlogHelpers) a graph laid out by the embedding of its tree form
 - [`WolframModelRulePlot`](https://www.wolframcloud.com/obj/wolframphysics/WolframModelRulePlot) a Wolfram model rule plotted as an icon
+- [`TuringMachinePlot`](https://www.wolframcloud.com/obj/sw-blog/MultiwayTuringMachines/Programs-01.wl) a Turing machine rule, an evolution or a coarse-grained multiway evolution drawn for a given number of states and colors
 
 - [`MetamathematicsStyleData`](https://www.wolframcloud.com/obj/wolframphysics/MetamathematicsStyleData), [`makePrettyEquations`](https://www.wolframcloud.com/obj/wolframphysics/BlogHelpers), …
 
@@ -135,7 +157,9 @@ into three dimensions.
 - [`arrayPlotFoliationLine`](https://www.wolframcloud.com/obj/wolframphysics/TechPaper-Programs/Section-05/FoliationLines.wl) the polyline of a foliation line at a given layer through the array plot of a substitution system evolution
 - [`caFoliationLines`](https://www.wolframcloud.com/obj/wolframphysics/TechPaper-Programs/Section-07/CausalGraph-Foliation.wl) foliation lines of the light cone shape, for the causal graph of a cellular automaton
 - [`regularCausalGraphPlot`](https://www.wolframcloud.com/obj/wolframphysics/TechPaper-Programs/Section-08/regularCausalGraphPlot.wl) a regular grid-like causal graph of a given number of layers, drawn with straight foliation lines
-- [`unorderedHypergraphPlot`](https://www.wolframcloud.com/obj/wolframphysics/TechPaper-Programs/Section-07/AlternativeFormulations.wl) an unordered hypergraph drawn with transparent hyperedge arrows and shaded polygons
+- [`diamondCausalGraphPlot`](https://www.wolframcloud.com/obj/wolframphysics/TechPaper-Programs/Section-05/CausalFoliations-01.wl) a regular diamond-shaped causal graph of given depth, drawn with its straight foliation lines
+- [`unorderedHypergraphPlot`](https://www.wolframcloud.com/obj/wolframphysics/TechPaper-Programs/Section-07/AlternativeFormulations.wl) an unordered hypergraph drawn with transparent hyperedge arrows and shaded polygons, the published [`HypergraphPlot`](https://resources.wolframcloud.com/FunctionRepository/resources/HypergraphPlot/) covers it
+- [`ShowSamples`](https://www.wolframcloud.com/obj/wolframphysics/TechPaper-Programs/Section-03/RandomRules.wl) the final states of a list of sampled rules, drawn as a row of hypergraph plots
 - [`newgraph`](https://www.wolframcloud.com/obj/wolframphysics/TechPaper-Programs/Section-06/newgraph.wl) the vertex sizes of a graph whose vertices are graphics, rescaled to match their rasterized aspect ratios
 
 ### Wolfram Community

@@ -5,8 +5,8 @@ Title: Proof Systems
 Context: WolframInstitute`WolframPhysics`
 Paclet: WolframInstitute/WolframPhysics
 URI: WolframInstitute/WolframPhysics/guide/ProofSystems
-Description: Proofs as explicit objects: proof objects and the search that finds them, natural deduction and sequent calculus with cut elimination and the Curry-Howard correspondence, proof graphs and proof visualization, and the automated theorem provers and proof databases the Wolfram Language links to
-Keywords: [proof, proof object, proof search, proof path, proof tree, proof graph, token-event proof graph, natural deduction, sequent calculus, cut elimination, inference rule, judgment, Curry-Howard, typed lambda term, automated theorem proving, theorem prover, Knuth-Bendix completion, equational induction, unification, Metamath, Lean, TPTP]
+Description: Proofs as explicit objects: proof objects and the search that finds them, natural deduction and sequent calculus with cut elimination and the Curry-Howard correspondence, proof graphs and proof visualization, and the automated theorem provers, Lean and proof databases the Wolfram Language links to
+Keywords: [proof, proof object, proof search, proof path, proof tree, proof graph, token-event proof graph, natural deduction, sequent calculus, cut elimination, inference rule, judgment, Curry-Howard, typed lambda term, automated theorem proving, theorem prover, Knuth-Bendix completion, equational induction, unification, Metamath, Lean, Mathlib, tactic, TPTP]
 RelatedGuides: [Metamathematics, AxiomSystemsAndEntailment, LambdaCalculus, TuringMachines, Combinators, RewritingEngines]
 ---
 
@@ -19,7 +19,8 @@ proofs of equivalence between strings and hypergraphs and proofs by equational i
 natural deduction and sequent calculus derivations, the cut elimination that removes their
 detours, and the Curry-Howard correspondence that reads a proof as a typed program; the proof
 graphs, token-event proof graphs and multiway clouds in which a proof is a path, and the layouts
-that draw them; and the external theorem provers, proof databases and benchmark libraries.
+that draw them; and the external theorem provers, Lean environments and tactic proofs, proof
+databases and benchmark libraries.
 
 ## Functions
 
@@ -31,6 +32,7 @@ that draw them; and the external theorem provers, proof databases and benchmark 
 - [`FindStringProof`](https://resources.wolframcloud.com/FunctionRepository/resources/FindStringProof/) (WFR) a proof of equivalence between two strings in a given multiway system
 - [`FindWolframModelProof`](https://resources.wolframcloud.com/FunctionRepository/resources/FindWolframModelProof/) (WFR) a proof of equivalence between two hypergraphs in a given multiway Wolfram model system
 - [`FindInductiveProof`](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/TuringMachine/ref/FindInductiveProof.html) (WolframInstitute/TuringMachine) a proof of a universally quantified goal by equational induction, the base case and the step case with the goal as induction hypothesis
+- [`KnuthBendixCompletion`](https://resources.wolframcloud.com/FunctionRepository/resources/KnuthBendixCompletion/) (WFR) the completion rules of a multiway system, the rewrite rules that resolve its branch pairs
 - [`UnfailingKnuthBendixCompletion`](https://www.wolframcloud.com/obj/nikm/DeployedResources/Function/UnfailingKnuthBendixCompletion) (Wolfram Cloud) equational proof search run in completion mode, returning every theorem it finds as a proof object of completion rules
 - [`MetamathImport`](https://resources.wolframcloud.com/FunctionRepository/resources/MetamathImport/) (WFR) a Metamath database as an object, with its statements, axioms, theorems, dependency graph, proof trees and token-event graphs as properties
 - [`FindListProof`](https://resources.wolframcloud.com/FunctionRepository/resources/FindListProof/) (WFR) a proof of equivalence between two lists in a given multiway system
@@ -58,9 +60,10 @@ that draw them; and the external theorem provers, proof databases and benchmark 
 - [`MultiwayEquationalGraph`](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/TuringMachine/ref/MultiwayEquationalGraph.html) (WolframInstitute/TuringMachine) a multiway equational-rewrite cloud evolved from seed expressions and drawn with the proof path between the seeds highlighted
 - [`MultiwayTokenEventGraph`](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/TuringMachine/ref/MultiwayTokenEventGraph.html) (WolframInstitute/TuringMachine) the same cloud in token-event form, state to event to state, with an axiom vertex feeding each event and the proof path highlighted
 - [`ProofObjectToTokenEventGraph`](https://www.wolframcloud.com/obj/wolframphysics/ProofObjectToTokenEventGraph) (Writings) a proof object redrawn as a token-event graph
-- [`FindTokenEventProof`](https://www.wolframcloud.com/obj/wolframphysics/FindTokenEventProof) (Writings) a proof found as a path through a token-event graph
+- [`FindTokenEventProof`](https://www.wolframcloud.com/obj/wolframphysics/FindTokenEventProof) (Writings) a proof found as a path through a token-event graph, the published [`FindEquationalPath`](https://resources.wolframcloud.com/FunctionRepository/resources/FindEquationalPath/) covers it
 - `LayeredGraphPlot` (WL) a layered drawing of a proof graph, the axioms at one end and the theorem at the other
 - `HighlightGraph` (WL) a proof path marked inside the larger graph of everything the axioms reach
+- [A study in proof space Topology](https://community.wolfram.com/t/20338) (Wolfram Community) the topology of the space of proofs, read off the token-event graphs of two-way string rewriting
 
 - `FindShortestPath` (WL), `TopologicalSort` (WL), `TransitiveReductionGraph` (WL), `GraphDistance` (WL), `VertexLabels` (WL), …
 
@@ -69,6 +72,14 @@ that draw them; and the external theorem provers, proof databases and benchmark 
 - [`TFindProof`](https://www.wolframcloud.com/obj/nikm/DeployedResources/Paclet/WolframInstitute/THVMLink/Documentation/ref/TFindProof.html) (WolframInstitute/THVMLink) a proof of a goal from a set of axioms, found by an external automated theorem prover
 - [`TFindEquationalProof`](https://www.wolframcloud.com/obj/nikm/DeployedResources/Paclet/WolframInstitute/THVMLink/Documentation/ref/TFindEquationalProof.html) (WolframInstitute/THVMLink) an equational proof found by an external prover and returned in proof-object form
 - [`TWaldmeisterProof`](https://www.wolframcloud.com/obj/nikm/DeployedResources/Paclet/WolframInstitute/THVMLink/Documentation/ref/TWaldmeisterProof.html) (WolframInstitute/THVMLink) a proof found by the Waldmeister unit-equality prover
+- [`TVampireProof`](https://www.wolframcloud.com/obj/nikm/DeployedResources/Paclet/WolframInstitute/THVMLink/Documentation/ref/TVampireProof.html) (WolframInstitute/THVMLink) a proof of a TPTP problem found by the Vampire prover
+- [`TEproverProof`](https://www.wolframcloud.com/obj/nikm/DeployedResources/Paclet/WolframInstitute/THVMLink/Documentation/ref/TEproverProof.html) (WolframInstitute/THVMLink) a proof of a TPTP problem found by the E prover
+- [`TTweeProof`](https://www.wolframcloud.com/obj/nikm/DeployedResources/Paclet/WolframInstitute/THVMLink/Documentation/ref/TTweeProof.html) (WolframInstitute/THVMLink) a proof of a TPTP problem found by the Twee equational prover
+- [`TProofObject`](https://www.wolframcloud.com/obj/nikm/DeployedResources/Paclet/WolframInstitute/THVMLink/Documentation/ref/TProofObject.html) (WolframInstitute/THVMLink) the proof object a runtime prover returns, carrying the theorem, the axioms and the DAG of proof steps
+- [`TSmtDecide`](https://www.wolframcloud.com/obj/nikm/DeployedResources/Paclet/WolframInstitute/THVMLink/Documentation/ref/TSmtDecide.html) (WolframInstitute/THVMLink) a Boolean combination of equalities decided by satisfiability modulo theories over congruence closure
+- [`ProofToLean`](https://resources.wolframcloud.com/PacletRepository/resources/Wolfram/LeanLink/ref/ProofToLean.html) (Wolfram/LeanLink) a Wolfram proof object transpiled into a checkable Lean environment
+- [`LeanTactic`](https://resources.wolframcloud.com/PacletRepository/resources/Wolfram/LeanLink/ref/LeanTactic.html) (Wolfram/LeanLink) a tactic applied to a proof state, one step of an interactive proof
+- [`LeanImport`](https://resources.wolframcloud.com/PacletRepository/resources/Wolfram/LeanLink/ref/LeanImport.html) (Wolfram/LeanLink) the constants of a compiled Lean module, Mathlib included, imported as a Lean environment
 - [`ImportDOT`](https://resources.wolframcloud.com/PacletRepository/resources/Wolfram/LeanLink/ref/ImportDOT.html) (Wolfram/LeanLink) a DOT-format graph imported into the Wolfram Language, the form in which a Lean proof graph arrives
 - [Thousands of Problems for Theorem Provers](https://www.wolframcloud.com/obj/nikm/DeployedResources/Data/Thousands-of-Problems-for-Theorem-Provers-%28TPTP%29) (Wolfram Cloud) the TPTP library of theorem-proving benchmark problems, indexed and parsed on demand
 - [Metamath Report](https://www.wolframcloud.com/obj/nikm/DeployedResources/Data/Metamath-Report) (Wolfram Cloud) contributions to the set.mm Metamath database of machine-checked proofs
@@ -109,6 +120,24 @@ that draw them; and the external theorem provers, proof databases and benchmark 
 - [`MultiwayInductiveProofPanel`](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/TuringMachine/ref/MultiwayInductiveProofPanel.html) the grafted inductive proof graph drawn at full opacity inside the faded term-space cloud of all its sub-proofs
 
 - [`MultiwayBothPanel`](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/TuringMachine/ref/MultiwayBothPanel.html), [`TokenEventPanel`](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/TuringMachine/ref/TokenEventPanel.html), [`StatementPanel`](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/TuringMachine/ref/StatementPanel.html), [`RuleSpacePanel`](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/TuringMachine/ref/RuleSpacePanel.html), [`IslandsPanel`](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/TuringMachine/ref/IslandsPanel.html), [`SettingsPanel`](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/TuringMachine/ref/SettingsPanel.html), …
+
+### Wolfram/LeanLink
+
+- [Wolfram/LeanLink](https://resources.wolframcloud.com/PacletRepository/resources/Wolfram/LeanLink/) a native link between the Wolfram Language and the Lean 4 theorem prover, loading Mathlib environments, running tactic proofs and transpiling proof objects into checkable Lean
+- [`LeanEnvironment`](https://resources.wolframcloud.com/PacletRepository/resources/Wolfram/LeanLink/ref/LeanEnvironment.html) a collection of named Lean constants, the loaded environment of a Lean module or source string
+- [`LeanImportString`](https://resources.wolframcloud.com/PacletRepository/resources/Wolfram/LeanLink/ref/LeanImportString.html) a Lean 4 source string compiled into a Lean environment
+- [`LeanExport`](https://resources.wolframcloud.com/PacletRepository/resources/Wolfram/LeanLink/ref/LeanExport.html) a Lean environment written back to a Lean source file
+- [`LeanTerm`](https://resources.wolframcloud.com/PacletRepository/resources/Wolfram/LeanLink/ref/LeanTerm.html) one Lean constant with its kind, type, term, source, parameters and expression graph
+- [`LeanState`](https://resources.wolframcloud.com/PacletRepository/resources/Wolfram/LeanLink/ref/LeanState.html) a theorem opened as a proof goal, with its goals, goal count and whether the proof is complete
+- [`LeanGoal`](https://resources.wolframcloud.com/PacletRepository/resources/Wolfram/LeanLink/ref/LeanGoal.html) a single goal of a proof state, with its target and context
+- [`LeanExprGraph`](https://resources.wolframcloud.com/PacletRepository/resources/Wolfram/LeanLink/ref/LeanExprGraph.html) the expression graph of a Lean constant, its proof term drawn as a graph
+- [`LeanCallGraph`](https://resources.wolframcloud.com/PacletRepository/resources/Wolfram/LeanLink/ref/LeanCallGraph.html) the call and dependency graph of a Lean constant, the theorems a proof depends on
+- [`LeanListTheorems`](https://resources.wolframcloud.com/PacletRepository/resources/Wolfram/LeanLink/ref/LeanListTheorems.html) the theorems of a Lean project as a dataset
+- [`LeanListConstants`](https://resources.wolframcloud.com/PacletRepository/resources/Wolfram/LeanLink/ref/LeanListConstants.html) every constant of a Lean module as an association
+- [`LeanCompile`](https://resources.wolframcloud.com/PacletRepository/resources/Wolfram/LeanLink/ref/LeanCompile.html) a Lean term or whole environment compiled to native code through `FunctionCompile`
+- [`LeanToFunction`](https://resources.wolframcloud.com/PacletRepository/resources/Wolfram/LeanLink/ref/LeanToFunction.html) a Lean term converted into a function with typed arguments
+
+- [`LeanExportString`](https://resources.wolframcloud.com/PacletRepository/resources/Wolfram/LeanLink/ref/LeanExportString.html), [`LeanExpr`](https://resources.wolframcloud.com/PacletRepository/resources/Wolfram/LeanLink/ref/LeanExpr.html), [`LeanValue`](https://resources.wolframcloud.com/PacletRepository/resources/Wolfram/LeanLink/ref/LeanValue.html), [`LeanConstantInfo`](https://resources.wolframcloud.com/PacletRepository/resources/Wolfram/LeanLink/ref/LeanConstantInfo.html), [`LeanLoadEnvironment`](https://resources.wolframcloud.com/PacletRepository/resources/Wolfram/LeanLink/ref/LeanLoadEnvironment.html), [`LeanFreeEnvironment`](https://resources.wolframcloud.com/PacletRepository/resources/Wolfram/LeanLink/ref/LeanFreeEnvironment.html), [`LeanCompileTyped`](https://resources.wolframcloud.com/PacletRepository/resources/Wolfram/LeanLink/ref/LeanCompileTyped.html), [`LeanExprToType`](https://resources.wolframcloud.com/PacletRepository/resources/Wolfram/LeanLink/ref/LeanExprToType.html), …
 
 ### Writings
 

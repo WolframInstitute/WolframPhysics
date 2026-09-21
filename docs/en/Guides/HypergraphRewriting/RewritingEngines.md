@@ -35,6 +35,13 @@ rewritten is a proof.
 - `SubsetReplace` (WL) replacement of subsets of elements in a list regardless of where they occur, the update step an evolution repeats
 - `NestList` (WL) the successive states reached by applying an update function repeatedly to an initial condition
 - `FixedPointList` (WL) the states of a run continued until no further rewrite changes the state
+- [`BetaReduceCompiled`](https://github.com/WolframInstitute/WolframLambda/blob/main/Kernel/Compiled.wl) (Wolfram/Lambda) beta reduction run by a compiled evaluator, for terms whose reduction is long
+- [`BetaReduceListCompiled`](https://github.com/WolframInstitute/WolframLambda/blob/main/Kernel/Compiled.wl) (Wolfram/Lambda) the successive terms of a beta reduction from a compiled evaluator
+- [`BetaReduceSizesCompiled`](https://github.com/WolframInstitute/WolframLambda/blob/main/Kernel/Compiled.wl) (Wolfram/Lambda) the sizes of the terms along a beta reduction, from a compiled evaluator
+- [`CellularAutomatonEvolution`](https://github.com/WolframInstitute/CellularAutomaton) (WolframInstitute/CellularAutomaton) the whole spacetime evolution of a rule with given colors and radius, computed on a Rust-accelerated engine
+- [WolframInstitute/CellularAutomaton](https://github.com/WolframInstitute/CellularAutomaton) (WolframInstitute/CellularAutomaton) a paclet for exploring cellular automaton rule spaces, with a Rust-accelerated search engine
+- [WolframInstitute/TuringMachine](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/TuringMachine/) (WolframInstitute/TuringMachine) a paclet for running and surveying Turing machines, one-sided and multiway, on a compiled engine
+- [`GeneratePostTagSystemHistory`](https://github.com/maxitg/PostTagSystem/blob/master/Kernel/GeneratePostTagSystemHistory.m) (PostTagSystem) an association recording the evolution from an initial state, stopping at a bound or at a checkpoint state
 - [Confluent Set Substitution Systems](https://community.wolfram.com/t/14367) (Wolfram Community) set substitution systems made confluent by adding rules that resolve their critical pairs, an early study run on the set replacement engine
 
 - `Nest` (WL), `FixedPoint` (WL), `NestWhileList` (WL), `ReplaceRepeated` (WL), `Compile` (WL), `FunctionCompile` (WL), `Dispatch` (WL), `LibraryFunctionLoad` (WL), …
@@ -43,6 +50,9 @@ rewritten is a proof.
 
 - `TimeConstrained` (WL) an evaluation stopped after a number of seconds, for an evolution or a search that may not halt
 - `MemoryConstrained` (WL) an evaluation stopped once it exceeds a byte budget, the other way a runaway evolution ends
+- `$IterationLimit` (WL) the maximum number of iterations an evaluation may take, the bound a runaway rewrite loop hits
+- `$RecursionLimit` (WL) the maximum recursion depth an evaluation may reach, the bound a deeply nested rewrite hits
+- [`$ReductionLimit`](https://www.wolframcloud.com/obj/wolframinstitute/DeployedResources/Paclet/WolframInstitute/PureMath/Documentation/ref/%24ReductionLimit.html) (WolframInstitute/PureMath) the number of reduction steps taken before a reduction gives up and reports non-termination
 - [`MaxEvents`](https://github.com/maxitg/SetReplace/blob/master/Documentation/Generators/MaxEvents.md) (SetReplace) a generator stopped after a given number of events have been applied
 - [`MaxGeneration`](https://github.com/maxitg/SetReplace/blob/master/Documentation/Generators/MaxGeneration.md) (SetReplace) a generator stopped once every token has reached a given generation
 - [`SetReplaceSystemParameters`](https://github.com/maxitg/SetReplace/blob/master/Documentation/Generators/SetReplaceSystemParameters.md) (SetReplace) the stopping and selection parameters a given system and generator accept
@@ -84,6 +94,10 @@ rewritten is a proof.
 - [`ImportDOT`](https://resources.wolframcloud.com/PacletRepository/resources/Wolfram/LeanLink/ref/ImportDOT.html) (Wolfram/LeanLink) a proof graph read in from the DOT output of the Lean proof assistant
 - [Thousands of Problems for Theorem Provers](https://www.wolframcloud.com/obj/nikm/DeployedResources/Data/Thousands-of-Problems-for-Theorem-Provers-%28TPTP%29) (Wolfram Cloud) the standard benchmark corpus a prover link is measured against
 - `FindInstance` (WL) a witness satisfying a set of constraints, the search a finite-model finder specializes
+- [`FindFiniteModels`](https://resources.wolframcloud.com/FunctionRepository/resources/FindFiniteModels/) (WFR) finite models consistent with a set of relations
+- [`FindEquationalModels`](https://resources.wolframcloud.com/FunctionRepository/resources/FindEquationalModels/) (WFR) instances of a binary operator that satisfy a set of equational constraints
+- [The starthere repository](https://github.com/GetJonWithIt/starthere) (GitHub) the code of the Summer School project that extended the equational proof search backend
+- [Automated Theorem Proving for Equational Logic](https://community.wolfram.com/t/10788) (Wolfram Community) a summer school project that extended the equational proof search backend
 
 - `SatisfiableQ` (WL), `SatisfiabilityInstances` (WL), `SatisfiabilityCount` (WL), `Resolve` (WL), `Reduce` (WL), …
 

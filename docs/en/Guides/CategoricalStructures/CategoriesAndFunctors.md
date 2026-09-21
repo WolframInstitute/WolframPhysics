@@ -51,6 +51,7 @@ between paths.
 - [`AbstractPullback`](https://resources.wolframcloud.com/FunctionRepository/resources/AbstractPullback/) (WFR), [`AbstractPushout`](https://resources.wolframcloud.com/FunctionRepository/resources/AbstractPushout/) (WFR) the pullback of a cospan of morphisms with a common codomain and the pushout of a span with a common domain
 - [`AbstractLimit`](https://www.wolframcloud.com/obj/wolframinstitute/DeployedResources/Paclet/WolframInstitute/PureMath/Documentation/ref/AbstractLimit.html) (WolframInstitute/PureMath) the limit of a diagram, an apex object with a leg morphism to every object of the diagram
 - [`AbstractStrictMonoidalCategory`](https://resources.wolframcloud.com/FunctionRepository/resources/AbstractStrictMonoidalCategory/) (WFR) a category carrying a strictly associative and unital tensor product
+- [WolframInstitute/PiMachine](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/PiMachine/) (WolframInstitute/PiMachine) a universal reversible machine, reversible computation built on the Pi calculus and compact closed categories
 
 - `TensorProduct` (WL), `TensorContract` (WL), `KroneckerProduct` (WL), …
 
@@ -84,8 +85,12 @@ between paths.
 
 - [`TokenEventGraph`](https://resources.wolframcloud.com/FunctionRepository/resources/TokenEventGraph/) (WFR) the tokens of a multicomputational evolution and the events that consume and create them
 - [`DirectedAcyclicEvaluate`](https://resources.wolframcloud.com/FunctionRepository/resources/DirectedAcyclicEvaluate/) (WFR) the local evaluation of functions over any directed acyclic graph
+- [`FindInfraHomotopy`](https://github.com/WolframInstitute/SyntheticInfrageometry/blob/main/SyntheticInfrageometry/Kernel/Usage.wl) (WolframInstitute/SyntheticInfrageometry) a homotopy between two walks of a graph, the chain of elementary moves joining them
+- [`HomotopicQ`](https://github.com/WolframInstitute/SyntheticInfrageometry/blob/main/SyntheticInfrageometry/Kernel/Usage.wl) (WolframInstitute/SyntheticInfrageometry) whether two walks of a graph are homotopic
 - [Homotopic foundations of Wolfram Models](https://community.wolfram.com/t/16400) (Wolfram Community) Wolfram models placed in homotopy type theory, with rules between rules as higher inductive structure
 - [Functorial QFT and its connections with the Wolfram Model](https://community.wolfram.com/t/18442) (Wolfram Community) connections between functorial quantum field theory and the Wolfram model through notions of cobordism within graphs and hypergraphs
+- [Multiway Systems as Cayley Graphs](https://community.wolfram.com/t/17413) (Wolfram Community) the limiting structure of multiway systems built from algebraic relations, read as Cayley graphs
+- [Petri category sequencer for Peano axioms' rewriting system](https://community.wolfram.com/t/26058) (Wolfram Community) a Petri net read as a category and used to sequence a rewriting system for the Peano axioms
 
 - [`MultiwayMonoid`](https://resources.wolframcloud.com/FunctionRepository/resources/MultiwayMonoid/) (WFR), [`MultiwayGroup`](https://resources.wolframcloud.com/FunctionRepository/resources/MultiwayGroup/) (WFR), [`MultiwaySemigroup`](https://resources.wolframcloud.com/FunctionRepository/resources/MultiwaySemigroup/) (WFR), …
 
@@ -100,6 +105,8 @@ between paths.
 - [`IdentityHypergraphMorphism`](https://www.wolframcloud.com/obj/wolframinstitute/DeployedResources/Paclet/WolframInstitute/PureMath/Documentation/ref/IdentityHypergraphMorphism.html) the identity morphism of a hypergraph state, sending every vertex and every edge token to itself
 - [`HypergraphGluingConditionReport`](https://www.wolframcloud.com/obj/wolframinstitute/DeployedResources/Paclet/WolframInstitute/PureMath/Documentation/ref/HypergraphGluingConditionReport.html) the dangling and identification conditions behind a gluing verdict, recorded one by one
 - [`HypergraphRuleInterface`](https://www.wolframcloud.com/obj/wolframinstitute/DeployedResources/Paclet/WolframInstitute/PureMath/Documentation/ref/HypergraphRuleInterface.html) the interface morphism of a rewriting datum, the discipline under which names are preserved and compared
+- [`MonoidalSignature`](https://www.wolframcloud.com/obj/wolframinstitute/DeployedResources/Paclet/WolframInstitute/PureMath/Documentation/ref/MonoidalSignature.html) a presentation of a monoidal category, its generating objects with an involutive dual pairing and its generating processes
+- [`MonoidalFunctorQ`](https://www.wolframcloud.com/obj/wolframinstitute/DeployedResources/Paclet/WolframInstitute/PureMath/Documentation/ref/MonoidalFunctorQ.html) whether object and generator maps define a monoidal functor from a signature into finite-dimensional arrays
 - Presheaves on a finite index category, the topos of hypergraph states they form and its internal logic
 - [`FinitePresheaf`](https://www.wolframcloud.com/obj/wolframinstitute/DeployedResources/Paclet/WolframInstitute/PureMath/Documentation/ref/FinitePresheaf.html) a set at every object and a map for every morphism, validated as a contravariant functor on a finite index category
 - [`HypergraphAttachmentCategory`](https://www.wolframcloud.com/obj/wolframinstitute/DeployedResources/Paclet/WolframInstitute/PureMath/Documentation/ref/HypergraphAttachmentCategory.html) the attachment category of a set of edge arities, one vertex object and one edge object per arity with the incidence morphisms between them

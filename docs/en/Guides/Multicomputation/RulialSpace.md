@@ -40,6 +40,8 @@ can compute.
 - [`RandomWolframModel`](https://resources.wolframcloud.com/FunctionRepository/resources/RandomWolframModel/) (WFR) a random canonical Wolfram model rule with a given signature, one sample drawn from a rule space
 - [`AllDeltaTMRules`](https://www.wolframcloud.com/obj/wolframphysics/Bulletin/DeltaTM.wl) (wolframphysics.org) all Turing machines with a given number of states and colors that differ from the identity machine in one case, the delta machines of rulial space
 - [`CellularAutomatonSearch`](https://github.com/WolframInstitute/CellularAutomaton) (WolframInstitute/CellularAutomaton) all rules of a cellular automaton rule space taking an initial condition to a target or to an exact active width, searched on a Rust-accelerated engine
+- [`CellularAutomatonOutputTable`](https://github.com/WolframInstitute/CellularAutomaton) (WolframInstitute/CellularAutomaton) the output of every rule of a rule space from one initial condition
+- [`TuringMachineOutput`](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/TuringMachine/ref/TuringMachineOutput.html) (WolframInstitute/TuringMachine) the halted outputs of every machine of a rule space on every input in a range
 - `TuringMachine` (WL) the evolution of a single Turing machine of a rule space from an initial tape for a number of steps
 - `RulePlot` (WL) the rule of a Turing machine or cellular automaton drawn as a picture
 - [`MultiwayTuringMachineFunction`](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/TuringMachine/ref/MultiwayTuringMachineFunction.html) (WolframInstitute/TuringMachine) all distinct tape values at the halted states of a nondeterministic Turing machine given as a list of rule numbers, the rulial machines run together
@@ -56,6 +58,7 @@ can compute.
 - [`CoordinatizeCausalGraph`](https://github.com/WolframInstitute/Infrageometry/blob/main/Infrageometry/Kernel/Chains.wl) (WolframInstitute/Infrageometry) two-dimensional coordinates for the events of a causal graph from a pair of observer chains, two observers taken as the axes
 - [`CoordinatizedCausalGraph`](https://github.com/WolframInstitute/Infrageometry/blob/main/Infrageometry/Kernel/Chains.wl) (WolframInstitute/Infrageometry) the reduced causal graph drawn at those coordinates, with the two observer chains highlighted
 - [`CausalGraphSimpleChains`](https://github.com/WolframInstitute/Infrageometry) (WolframInstitute/Infrageometry) the families of source-to-sink paths of a causal graph, the chains an observer can be taken to follow
+- [`FindChain`](https://github.com/WolframInstitute/InfraCausality/blob/main/InfraCausality/Kernel/InfraCausality.wl) (WolframInstitute/InfraCausality) chains between two vertices of a causal graph, the worldlines of observers
 - `GraphDistance` (WL) the length of a shortest path between two states of a rulial multiway graph, the rulial distance between them
 
 - `GraphDistanceMatrix` (WL), `FindPath` (WL), `LayeredGraph` (WL), `GraphLayers` (WL), …
@@ -66,6 +69,7 @@ can compute.
 - [`CausalInvariantQ`](https://resources.wolframcloud.com/FunctionRepository/resources/CausalInvariantQ/) (WFR) whether a multiway system is causal invariant after a number of steps from an initial condition, the condition under which observers on different branches agree on the causal graph
 - [`TotalCausalInvariantQ`](https://resources.wolframcloud.com/FunctionRepository/resources/TotalCausalInvariantQ/) (WFR) whether a multiway system is total causal invariant after a number of steps, decided from its rules alone
 - [`SpatialReconstruction`](https://github.com/WolframInstitute/Infrageometry) (WolframInstitute/Infrageometry) the spatial relation graph reconstructed from a slice of a causal graph after a number of steps, the space an observer on that slice sees
+- [`OneSidedTuringMachineFind`](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/TuringMachine/ref/OneSidedTuringMachineFind.html) (WolframInstitute/TuringMachine) every rule of a space giving the same outputs as a chosen machine, the machines an observer of those outputs cannot tell apart
 - `TopologicalSort` (WL) the events of a causal graph in an order consistent with every causal edge, one sequential history an observer could record
 - [Multi-way tag systems in coordinatized rulial space](https://community.wolfram.com/t/20348) (Wolfram Community) tag systems of a rule space run together and placed in rulial coordinates
 - [RuliadTrotter: meta-modeling metamathematical observers](https://community.wolfram.com/t/20354) (Wolfram Community) metamathematical observers modeled inside the rulial structure they observe

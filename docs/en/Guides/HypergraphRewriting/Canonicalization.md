@@ -31,6 +31,10 @@ performs as it runs.
 - [`CanonicalHypergraphRule`](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/Hypergraph/ref/CanonicalHypergraphRule.html) (WolframInstitute/Hypergraph) a canonical form of a hypergraph rule, with the vertices of both sides relabeled by consecutive integers
 - [`CanonicalWolframModelRule`](https://resources.wolframcloud.com/FunctionRepository/resources/CanonicalWolframModelRule/) (WFR) a canonical representation of a Wolfram model rule, the form under which rules are enumerated and compared
 - [`CanonicalLinkedHypergraph`](https://github.com/WolframInstitute/Multicomputation/tree/master/Multicomputation/Kernel) (Wolfram/Multicomputation) a canonical form of a linked hypergraph, the form a multicomputational evolution identifies its states by
+- [`CanonicalRule`](https://resources.wolframcloud.com/PacletRepository/resources/Obando/CAGenetics/ref/CanonicalRule.html) (Obando/CAGenetics) the canonical representative of a cellular automaton rule among the rules equivalent to it
+- [`EquivalentClass`](https://resources.wolframcloud.com/PacletRepository/resources/Obando/CAGenetics/ref/EquivalentClass.html) (Obando/CAGenetics) the rules equivalent to a given one in the rule space with given colors and radius
+- [`CanonicalAutomatonCode`](https://github.com/WolframInstitute/IteratedFiniteAutomaton/blob/main/IteratedFiniteAutomaton/Kernel/Usage.wl) (WolframInstitute/IteratedFiniteAutomaton) the least code in the relabeling orbit of an iterated finite automaton, the same for every automaton differing from it only by relabeling
+- [`MinimizeFA`](https://resources.wolframcloud.com/PacletRepository/resources/KlausSutner/Automata/ref/MinimizeFA.html) (KlausSutner/Automata) the minimal machine accepting the same language
 - `IndexGraph` (WL) a graph with each vertex replaced by its integer index, the relabeling a canonical form ends in
 - [`IndexHypergraph`](https://github.com/maxitg/SetReplace/blob/master/Documentation/SymbolsAndFunctions/UtilityFunctions/IndexHypergraph.md) (SetReplace) a hypergraph with its vertices replaced by their vertex indices
 - `Hash` (WL) a hash code of an expression, the key a canonicalized state is stored under
@@ -47,6 +51,9 @@ performs as it runs.
 - [`HypergraphIsomorphismQ`](https://www.wolframcloud.com/obj/wolframinstitute/DeployedResources/Paclet/WolframInstitute/PureMath/Documentation/ref/HypergraphIsomorphismQ.html) (WolframInstitute/PureMath) whether a hypergraph morphism is an isomorphism, bijective on vertices and on edge tokens
 - `IsomorphicSubgraphQ` (WL) whether a graph has a subgraph isomorphic to another graph
 - [`IGVF2IsomorphicQ`](https://github.com/szhorvat/IGraphM) (IGraphM) an isomorphism test for two graphs by the VF2 algorithm
+- [`IsomorphicQDFA`](https://resources.wolframcloud.com/PacletRepository/resources/KlausSutner/Automata/ref/IsomorphicQDFA.html) (KlausSutner/Automata) whether two deterministic finite automata are isomorphic
+- [`EquivalentQFA`](https://resources.wolframcloud.com/PacletRepository/resources/KlausSutner/Automata/ref/EquivalentQFA.html) (KlausSutner/Automata) whether two machines accept the same language
+- [Identifying homogeneity in hypergraphs via approximate isomorphism](https://community.wolfram.com/t/19410) (Wolfram Community) the homogeneity of a hypergraph assessed from counts of subgraph isomorphisms and applicable rewrites, the motif frequencies of its regions
 
 - [`DisplacementIsomorphismQ`](https://github.com/WolframInstitute/Infrageometry/blob/main/Infrageometry/Kernel/Displacements.wl) (WolframInstitute/Infrageometry), [`IsomorphicFibersQ`](https://github.com/WolframInstitute/InfraGaugeTheory/blob/main/InfraGaugeTheory/Kernel/FiberedGraph.wl) (WolframInstitute/InfraGaugeTheory), …
 
@@ -54,6 +61,7 @@ performs as it runs.
 
 - `FindGraphIsomorphism` (WL) an isomorphism that maps one graph to another by renaming vertices
 - [`FindHypergraphIsomorphism`](https://resources.wolframcloud.com/FunctionRepository/resources/FindHypergraphIsomorphism/) (WFR) the isomorphisms between two orderless hypergraphs
+- [`OrientedGraphIsomorphism`](https://github.com/maxitg/OrientedGraph/blob/master/OrientedGraph.wl) (OrientedGraph) an isomorphism mapping one oriented graph to another with chosen ports made to correspond, identity of planar network systems up to relabeling
 - `FindSubgraphIsomorphism` (WL) a subgraph isomorphism mapping one graph onto a subgraph of another, the matching of a rule's left side inside a state
 - `FindIsomorphicSubgraph` (WL) a subgraph of one graph isomorphic to another graph
 - [`IGVF2FindSubisomorphisms`](https://github.com/szhorvat/IGraphM) (IGraphM) all the subgraph isomorphisms between two graphs by the VF2 algorithm
@@ -97,6 +105,8 @@ performs as it runs.
 - [`NonIsomorphicComponents`](https://resources.wolframcloud.com/FunctionRepository/resources/NonIsomorphicComponents/) the components of a graph that are pairwise non-isomorphic
 - [`FindGroupIsomorphism`](https://resources.wolframcloud.com/FunctionRepository/resources/FindGroupIsomorphism/) up to a given number of isomorphisms between two permutation groups
 - [`CanonicalListRotation`](https://resources.wolframcloud.com/FunctionRepository/resources/CanonicalListRotation/) a canonical rotation of a list of values, the representative cyclic orderings are compared by
+- [`StandardOrderIndex`](https://resources.wolframcloud.com/FunctionRepository/resources/StandardOrderIndex/) the index of a list of integers in standard order, the first-occurrence relabeling that canonical rules use
+- [`StandardOrderFromIndex`](https://resources.wolframcloud.com/FunctionRepository/resources/StandardOrderFromIndex/) the list of integers in standard order with a given index
 
 - [`FindCanonicalHypergraph`](https://resources.wolframcloud.com/FunctionRepository/resources/FindCanonicalHypergraph/), [`FindCanonicalWolframModel`](https://resources.wolframcloud.com/FunctionRepository/resources/FindCanonicalWolframModel/), [`EnumerateHypergraphs`](https://resources.wolframcloud.com/FunctionRepository/resources/EnumerateHypergraphs/), …
 
@@ -109,6 +119,7 @@ performs as it runs.
 - [`EdgeSymmetry`](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/Hypergraph/ref/EdgeSymmetry.html) the vertex permutations each hyperedge of a hypergraph is symmetric under
 - [`ToOrderedHypergraph`](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/Hypergraph/ref/ToOrderedHypergraph.html) a hypergraph with ordered edge symmetry, every hyperedge expanded over its full symmetry group
 - [`SimpleHypergraph`](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/Hypergraph/ref/SimpleHypergraph.html) a hypergraph with repeated-vertex hyperedges dropped and hyperedges agreeing up to their edge symmetry merged
+- [`KoszulSign`](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/Hypergraph/ref/KoszulSign.html) the Koszul sign of a permutation of graded elements, the sign the graded canonical form and the insertion bracket carry
 
 - [`EnumerateHypergraphs`](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/Hypergraph/ref/EnumerateHypergraphs.html), [`EnumerateOrderedHypergraphs`](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/Hypergraph/ref/EnumerateOrderedHypergraphs.html), [`EnumerateWolframModelRules`](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/Hypergraph/ref/EnumerateWolframModelRules.html), [`CanonicalHypergraphGraded`](https://github.com/WolframInstitute/Hypergraph/blob/main/Kernel/HypergraphInsertionBracket.m), …
 
@@ -124,3 +135,4 @@ performs as it runs.
 - [`LambdaAlphaEquivalentQ`](https://www.wolframcloud.com/obj/wolframinstitute/DeployedResources/Paclet/WolframInstitute/PureMath/Documentation/ref/LambdaAlphaEquivalentQ.html) whether two lambda terms are equal up to renaming of their bound variables
 - [`AlgebraIsomorphicQ`](https://www.wolframcloud.com/obj/wolframinstitute/DeployedResources/Paclet/WolframInstitute/PureMath/Documentation/ref/AlgebraIsomorphicQ.html) whether two finite algebras are isomorphic under a signature-preserving bijection of their carriers
 - [`QuotientAlgebra`](https://www.wolframcloud.com/obj/wolframinstitute/DeployedResources/Paclet/WolframInstitute/PureMath/Documentation/ref/QuotientAlgebra.html) the quotient of an algebra by a congruence, its carrier the congruence classes
+- [`AutomatonMinimize`](https://www.wolframcloud.com/obj/wolframinstitute/DeployedResources/Paclet/WolframInstitute/PureMath/Documentation/ref/AutomatonMinimize.html) the minimal deterministic automaton accepting the same language as a given one, the canonical form of that language

@@ -330,6 +330,7 @@ carries one: the heading is the provenance of everything beneath it.
 | Function Repository | ``[`Name`](https://resources.wolframcloud.com/FunctionRepository/resources/Name/) (WFR)`` | `(WFR)` |
 | Paclet Repository paclet | ``[`Name`](https://resources.wolframcloud.com/PacletRepository/resources/Publisher/Paclet/ref/Name.html) (Publisher/Paclet)`` | the paclet's name as its publisher spells it |
 | Paclet deployed as a cloud resource | ``[`Name`](https://www.wolframcloud.com/obj/<account>/DeployedResources/Paclet/Publisher/Paclet/Documentation/ref/Name.html) (Publisher/Paclet)`` | the paclet's name; the ref page under the deployed resource is the one that serves anonymously |
+| Deployed cloud function | ``[`Name`](https://www.wolframcloud.com/obj/<account>/DeployedResources/Function/Name) (Wolfram Cloud)`` | `(Wolfram Cloud)`; a function deployed on its own as a cloud resource is cited at its deployed address, and a Function Repository twin, where one exists, is a second entry beside it |
 | Other paclet | ``[`Name`](https://github.com/owner/repo/…) (SetReplace)`` | the paclet's name; the link is its published reference page where one exists, else the repository page for the function |
 | GitHub | ``[`Name`](https://github.com/owner/repo) (GitHub)`` | `(GitHub)` |
 | Wolfram Community | `[Title](https://community.wolfram.com/groups/-/m/t/…) (Wolfram Community)` | `(Wolfram Community)`; a post is prose, so its title is plain text |
@@ -354,19 +355,30 @@ takes over for that entry:
   entry leaves the body.
 - Where the external function is still worth knowing about (a different convention, a
   feature the paclet's symbol does not yet have), it may be cited once as an alternative
-  in an italic note line under the entry, using the same italic-note mechanism the
-  pages use for prose asides:
+  in an italic-led note written as its own `- ` bullet directly under the entry:
 
   ```
-  *Alternative implementation:* [`WolframModel`](https://…) (WFR) computes such-and-such.
+  - `WolframModel` the evolution of a Wolfram model
+  - *Alternative implementation:* [`WolframModel`](https://…) (WFR) computes such-and-such.
   ```
+
+  The bullet form is the only one that survives conversion. In a guide's Functions
+  section the converter folds an indented continuation line into the description of the
+  bullet above it, and drops an unindented line, with or without a blank line before
+  it, from the built notebook altogether; a `- *Alternative implementation:* …` bullet
+  renders as its own guide-text line, the italic label first and the link after it.
+  Never write the note as an indented line under the entry.
 
 - The comparison itself (what differs, why the paclet has its own) belongs on the
   symbol's reference page, in its `#| annotation` design-review note and, when it helps
   a user choose, a Properties and Relations example; never in the guide bullet.
 
 Until a superseding symbol exists, do not paper over the gap with a note: the external
-function is the entry.
+function is the entry. Two external functions that compute the same thing (a Function
+Repository function and its cloud-deployed or writings twin, a paclet symbol and the
+resource function it wraps) are two ordinary entries, each with its own tag or under its
+own per-source heading, placed side by side where the topic calls for both; neither is a
+note under the other.
 
 ## Conventions, and why they matter
 

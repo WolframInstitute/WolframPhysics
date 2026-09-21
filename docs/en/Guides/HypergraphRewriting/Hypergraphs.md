@@ -24,17 +24,27 @@ A hypergraph is a collection of hyperedges, each a list of vertices, and a rewri
 - [`EdgeSymmetry`](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/Hypergraph/ref/EdgeSymmetry.html) (WolframInstitute/Hypergraph) the vertex permutations each hyperedge of a hypergraph is symmetric under
 - [`ToOrderedHypergraph`](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/Hypergraph/ref/ToOrderedHypergraph.html) (WolframInstitute/Hypergraph) a hypergraph with ordered hyperedges, every hyperedge expanded over its edge symmetry group
 - [`SimpleHypergraph`](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/Hypergraph/ref/SimpleHypergraph.html) (WolframInstitute/Hypergraph) a hypergraph with repeated-vertex hyperedges dropped and hyperedges agreeing up to symmetry merged
+- [`ToLinkedHypergraph`](https://resources.wolframcloud.com/PacletRepository/resources/Wolfram/Multicomputation/ref/ToLinkedHypergraph.html) (Wolfram/Multicomputation) a string, tree or graph encoded as a linked hypergraph, with explicit link vertices and payload vertices
+- [`FromLinkedHypergraph`](https://resources.wolframcloud.com/PacletRepository/resources/Wolfram/Multicomputation/ref/FromLinkedHypergraph.html) (Wolfram/Multicomputation) a linked hypergraph decoded back into the expression it encodes
 - [`Subhypergraph`](https://github.com/maxitg/SetReplace/blob/master/Documentation/SymbolsAndFunctions/UtilityFunctions/Subhypergraph.md) (SetReplace) the hyperedges of a hypergraph that are subsets of a given list of vertices
 - [`WeakSubhypergraph`](https://github.com/maxitg/SetReplace) (SetReplace) the hyperedges of a hypergraph with any vertex in a given list
 - [`IndexHypergraph`](https://github.com/maxitg/SetReplace/blob/master/Documentation/SymbolsAndFunctions/UtilityFunctions/IndexHypergraph.md) (SetReplace) a hypergraph with its vertices replaced by their vertex indices
+- [`HypergraphPlot`](https://github.com/maxitg/SetReplace/blob/master/Documentation/SymbolsAndFunctions/HypergraphPlot.md) (SetReplace) a plot of an ordered hypergraph represented as a list of vertex lists
+- [`QuantumCircuitHypergraph`](https://github.com/WolframResearch/QuantumFramework/blob/main/QuantumFramework/Kernel/QuantumCircuitOperator/TensorNetwork.m) (Wolfram/QuantumFramework) a quantum circuit as a hypergraph, one hyperedge per gate tensor over its wire indices, also the `"Hypergraph"` property of a circuit
 
 ### Rules and Rule Forms
 
 - `Rule` (WL) a rule that transforms its left side into its right side, the form of a hypergraph rewrite rule with a list of hyperedges on each side and each hyperedge a list of vertices
 - `RuleDelayed` (WL) a rule whose right side is evaluated only after the rule is used, the form a pattern rule takes when its right side creates new vertices
 - [`HypergraphRule`](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/Hypergraph/ref/HypergraphRule.html) (WolframInstitute/Hypergraph) a hypergraph rewriting rule that replaces the hypergraph input with the hypergraph output
+- [`HypergraphRewritingRule`](https://www.wolframcloud.com/obj/wolframinstitute/DeployedResources/Paclet/WolframInstitute/PureMath/Documentation/ref/HypergraphRewritingRule.html) (WolframInstitute/PureMath) a rule as a span of two monomorphisms out of a shared interface, a Wolfram model rule in categorical form
+- [`StringRuleToWMRule`](https://www.wolframcloud.com/obj/wolframphysics/TechPaper-Programs/Section-07/StringToWMSet.wl) (wolframphysics.org) string substitution rules converted to Wolfram model hypergraph rules
 - [`ToPatternRules`](https://github.com/maxitg/SetReplace/blob/master/Documentation/SymbolsAndFunctions/ToPatternRules.md) (SetReplace) the explicit pattern rules of a set substitution system equivalent to a list of hypergraph rules
+- [`LinkedHypergraphRuleToPatternRule`](https://github.com/WolframInstitute/Multicomputation/blob/master/Multicomputation/Kernel/LinkedHypergraph.m) (Wolfram/Multicomputation) a rule between linked hypergraphs turned into an explicit pattern rule
 - [`WolframModelRuleValue`](https://github.com/maxitg/SetReplace/blob/master/Documentation/SymbolsAndFunctions/UtilityFunctions/WolframModelRuleValue.md) (SetReplace) a property of a rule readable without running it, its signature, connectivity or maximum arity among them
+- [`$WolframModelRuleProperties`](https://github.com/maxitg/SetReplace/blob/master/Documentation/SymbolsAndFunctions/UtilityFunctions/WolframModelRuleValue.md) (SetReplace) the properties a Wolfram model rule can be asked for, the keys `WolframModelRuleValue` accepts
+- [`RuleSignatureForm`](https://www.wolframcloud.com/obj/wolframphysics/TechPaper-Programs/Section-03/RandomRules.wl) (wolframphysics.org) a rule signature written as subscripted counts and arities, with a list of signatures in a row, the published [`WolframModelSignatureForm`](https://resources.wolframcloud.com/FunctionRepository/resources/WolframModelSignatureForm/) covers it
+- [`WolframModelRulePlot`](https://www.wolframcloud.com/obj/wolframphysics/WolframModelRulePlot) (Writings) a Wolfram model rule drawn with its input and output hypergraphs side by side
 
 ### Matching and Applying a Rule
 
@@ -94,8 +104,15 @@ A hypergraph is a collection of hyperedges, each a list of vertices, and a rewri
 - [`OrderedHypergraphToGraph`](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/Hypergraph/ref/OrderedHypergraphToGraph.html) a graph encoding that keeps the hyperedges distinct and preserves the vertex order within each
 - [`HypergraphInsertion`](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/Hypergraph/ref/HypergraphInsertion.html) one hypergraph inserted into another at every allowed vertex, each way of doing so carrying its sign
 - [`HypergraphInsertionBracket`](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/Hypergraph/ref/HypergraphInsertionBracket.html) the graded antisymmetric bracket of hypergraphs under insertion
+- [`KoszulSign`](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/Hypergraph/ref/KoszulSign.html) the Koszul sign of a permutation of graded elements, the sign each insertion of one hypergraph into another carries in the bracket
 - [`RandomHypergraph`](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/Hypergraph/ref/RandomHypergraph.html) a pseudorandom hypergraph on a given number of atoms with given numbers of hyperedges of each arity
 - [`EnumerateHypergraphs`](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/Hypergraph/ref/EnumerateHypergraphs.html) the simple connected hypergraphs with given numbers of hyperedges of each arity
+- [`RandomHypergraphRule`](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/Hypergraph/ref/RandomHypergraphRule.html) a random hypergraph rewrite rule whose input and output have given numbers of hyperedges of each arity
+- [`EnumerateHypergraphRules`](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/Hypergraph/ref/EnumerateHypergraphRules.html) the canonical hypergraph rewrite rules whose input and output have given numbers of hyperedges of each arity
+- [`CanonicalHypergraphRule`](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/Hypergraph/ref/CanonicalHypergraphRule.html) a canonical form of a hypergraph rule, with the vertices of both sides relabeled by consecutive integers
+- [`HypergraphEmbedding`](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/Hypergraph/ref/HypergraphEmbedding.html) coordinates for the vertices of a hypergraph, the embedding its plot is drawn from
+- [`Hypergraph3D`](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/Hypergraph/ref/Hypergraph3D.html) a hypergraph laid out and drawn in three dimensions
+- [`SimpleHypergraphPlot`](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/Hypergraph/ref/SimpleHypergraphPlot.html) a plot of a hypergraph, each hyperedge drawn through its vertices
 - [`HypergraphDraw`](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/Hypergraph/ref/HypergraphDraw.html) an interactive canvas for drawing a hypergraph
 - [`HypergraphRuleDraw`](https://resources.wolframcloud.com/PacletRepository/resources/WolframInstitute/Hypergraph/ref/HypergraphRuleDraw.html) two side-by-side canvases for drawing the input and the output of a rule
 
@@ -105,8 +122,11 @@ A hypergraph is a collection of hyperedges, each a list of vertices, and a rewri
 ### Wolfram Function Repository
 
 - [`WolframModelPlot`](https://resources.wolframcloud.com/FunctionRepository/resources/WolframModelPlot/) a hypergraph drawn with its hyperedges as polygons, whether a state or a side of a rule
+- [`HypergraphPlot`](https://resources.wolframcloud.com/FunctionRepository/resources/HypergraphPlot/) a hypergraph drawn as a graph with its hyperedges as polygons, the basic picture of a state
+- [`SimpleHypergraphPlot`](https://resources.wolframcloud.com/FunctionRepository/resources/SimpleHypergraphPlot/) a hypergraph plotted from its hyperedges and its isolated vertices
 - [`WolframModelRuleForm`](https://resources.wolframcloud.com/FunctionRepository/resources/WolframModelRuleForm/) a Wolfram model rule written in letter form
 - [`WolframModelSignatureForm`](https://resources.wolframcloud.com/FunctionRepository/resources/WolframModelSignatureForm/) the formatted form of a signature specification for a rule or a state
+- [`EnumerateRuleSignatures`](https://resources.wolframcloud.com/FunctionRepository/resources/EnumerateRuleSignatures/) the possible rule signatures for substitution systems and Wolfram models with a given number of elements
 - [`WolframModelTraditionalForm`](https://resources.wolframcloud.com/FunctionRepository/resources/WolframModelTraditionalForm/) a Wolfram model displayed in an analogue of traditional mathematical notation
 - [`AdjacencyTensor`](https://resources.wolframcloud.com/FunctionRepository/resources/AdjacencyTensor/) the adjacency tensor of an arbitrary hypergraph
 - [`AdjacencyHypergraph`](https://resources.wolframcloud.com/FunctionRepository/resources/AdjacencyHypergraph/) the hypergraph with a specified adjacency tensor
@@ -120,6 +140,7 @@ A hypergraph is a collection of hyperedges, each a list of vertices, and a rewri
 ### WolframInstitute/Infrageometry
 
 - [WolframInstitute/Infrageometry](https://github.com/WolframInstitute/Infrageometry) a paclet of discrete geometry on graphs and hypergraphs, carrying the hypergraph structure utilities below
+- [`HypergraphVertexSet`](https://github.com/WolframInstitute/Infrageometry/blob/main/Infrageometry/Kernel/Hypergraph.wl) the distinct vertices of a hypergraph given as a list of hyperedges
 - [`HypergraphDegree`](https://github.com/WolframInstitute/Infrageometry/blob/main/Infrageometry/Kernel/Hypergraph.wl) each vertex with the number of hyperedges it is incident to
 - [`Hypergraph2Section`](https://github.com/WolframInstitute/Infrageometry/blob/main/Infrageometry/Kernel/Hypergraph.wl) the 2-section graph, joining the vertices that co-occur in a hyperedge
 - [`Weighted2SectionGraph`](https://github.com/WolframInstitute/Infrageometry/blob/main/Infrageometry/Kernel/Hypergraph.wl) the 2-section graph with each edge weighted by how many hyperedges hold both its vertices
@@ -127,8 +148,10 @@ A hypergraph is a collection of hyperedges, each a list of vertices, and a rewri
 - [`HypergraphMaximalEdges`](https://github.com/WolframInstitute/Infrageometry/blob/main/Infrageometry/Kernel/Hypergraph.wl) the inclusion-maximal hyperedges, those contained in no other
 - [`HypergraphComplex`](https://github.com/WolframInstitute/Infrageometry/blob/main/Infrageometry/Kernel/Hypergraph.wl) the downward-closed simplicial complex generated by the hyperedges
 - [`HypergraphSummary`](https://github.com/WolframInstitute/Infrageometry/blob/main/Infrageometry/Kernel/Hypergraph.wl) the counts, hyperedge size statistics, average degree and degree distribution of a hypergraph
+- [`PopularHypergraph`](https://github.com/WolframInstitute/Infrageometry/blob/main/Infrageometry/Kernel/Hypergraph.wl) a named hypergraph dataset as a list of hyperedges, with its incidence graph, 2-section and description on request
+- [`PopularHypergraphNames`](https://github.com/WolframInstitute/Infrageometry/blob/main/Infrageometry/Kernel/Hypergraph.wl) the names of the hypergraph datasets `PopularHypergraph` knows
 
-- [`HyperedgeCount`](https://github.com/WolframInstitute/Infrageometry/blob/main/Infrageometry/Kernel/Hypergraph.wl), [`HyperedgeSizes`](https://github.com/WolframInstitute/Infrageometry/blob/main/Infrageometry/Kernel/Hypergraph.wl), [`HyperedgeSizeDistribution`](https://github.com/WolframInstitute/Infrageometry/blob/main/Infrageometry/Kernel/Hypergraph.wl), …
+- [`HyperedgeCount`](https://github.com/WolframInstitute/Infrageometry/blob/main/Infrageometry/Kernel/Hypergraph.wl), [`HypergraphVertexCount`](https://github.com/WolframInstitute/Infrageometry/blob/main/Infrageometry/Kernel/Hypergraph.wl), [`HyperedgeSizes`](https://github.com/WolframInstitute/Infrageometry/blob/main/Infrageometry/Kernel/Hypergraph.wl), [`HyperedgeSizeDistribution`](https://github.com/WolframInstitute/Infrageometry/blob/main/Infrageometry/Kernel/Hypergraph.wl), …
 
 ### Wolfram Community
 

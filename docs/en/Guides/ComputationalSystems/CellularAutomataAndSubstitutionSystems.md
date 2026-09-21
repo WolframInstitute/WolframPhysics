@@ -34,6 +34,7 @@ hypergraph rewriting or into a finite-state machine.
 - [`BlockCellularAutomaton`](https://resources.wolframcloud.com/FunctionRepository/resources/BlockCellularAutomaton/) (WFR) the evolution of a cellular automaton whose rule updates fixed blocks of cells that shift between steps
 - [`ReversibleCellularAutomaton`](https://resources.wolframcloud.com/FunctionRepository/resources/ReversibleCellularAutomaton/) (WFR) the evolution of a reversible cellular automaton, each step determined by the two that precede it
 - [`ProbabilisticCellularAutomaton`](https://resources.wolframcloud.com/FunctionRepository/resources/ProbabilisticCellularAutomaton/) (WFR) the evolution of a cellular automaton whose cases fire with given probabilities
+- [`QuantumTensorAutomaton`](https://resources.wolframcloud.com/FunctionRepository/resources/QuantumTensorAutomaton/) (WFR) a quantum cellular automaton evolving a collection of qubits under compositions of unitary operators
 - [`MobileAutomaton`](https://resources.wolframcloud.com/FunctionRepository/resources/MobileAutomaton/) (WFR) the evolution of a mobile automaton, a single active cell moving along the line
 - [`CellularAutomatonEvolution`](https://github.com/WolframInstitute/CellularAutomaton) (WolframInstitute/CellularAutomaton) the whole spacetime evolution of a rule with given colors and radius, computed on a Rust-accelerated engine
 - [`CellularAutomatonOutput`](https://github.com/WolframInstitute/CellularAutomaton) (WolframInstitute/CellularAutomaton) the final state such a rule reaches from an initial condition
@@ -56,17 +57,29 @@ hypergraph rewriting or into a finite-state machine.
 - [`CellularAutomatonSearch`](https://github.com/WolframInstitute/CellularAutomaton) (WolframInstitute/CellularAutomaton) every rule of a space taking an initial condition to a target or to an exact active width
 - [`CellularAutomatonTest`](https://github.com/WolframInstitute/CellularAutomaton) (WolframInstitute/CellularAutomaton) whether a rule carries an initial condition to a target state within a number of steps
 - [`CellularAutomatonStateWidth`](https://github.com/WolframInstitute/CellularAutomaton) (WolframInstitute/CellularAutomaton) the active width of a state, the extent of its nonzero cells
+- [`CellularAutomatonOutputTable`](https://github.com/WolframInstitute/CellularAutomaton) (WolframInstitute/CellularAutomaton) the output of every rule of a rule space from one initial condition
+- [`CellularAutomatonActiveWidths`](https://github.com/WolframInstitute/CellularAutomaton) (WolframInstitute/CellularAutomaton) the greatest and the final active width reached by each rule of a rule space
+- [`CellularAutomatonBoundedWidthSearch`](https://github.com/WolframInstitute/CellularAutomaton) (WolframInstitute/CellularAutomaton) the rules whose active region never exceeds a given width
+- [`CellularAutomatonWidthRatioSearch`](https://github.com/WolframInstitute/CellularAutomaton) (WolframInstitute/CellularAutomaton) the rules whose output width is a given multiple of the input width
+- [`CARuleIterator`](https://github.com/WolframInstitute/CellularAutomaton/blob/main/CellularAutomaton/Kernel/Functions.wl) (WolframInstitute/CellularAutomaton) a compiled iterator over the rule numbers consistent with fixed pattern constraints
 
 - `Tuples` (WL), `Subsets` (WL), `Permutations` (WL), `IntegerDigits` (WL), `FromDigits` (WL), …
 
 ### Substitution Systems and L-Systems
 
 - `SubstitutionSystem` (WL) the evolution of a string or list substitution system with a given rule from an initial condition
+- `StringReplace` (WL) a string with every substring matching a rule replaced, one step of a string substitution system
+- `StringReplaceList` (WL) every string one rewrite produces, one per occurrence of a rule
+- `SequenceReplace` (WL) a matching subsequence of a list replaced by the result of a rule, one step of a list substitution system
+- [`MultiStringReplace`](https://github.com/WolframInstitute/Multicomputation/tree/master/Multicomputation/Kernel) (Wolfram/Multicomputation) every way of applying a string rule at non-overlapping positions, as an association
 - [`SequentialSubstitutionSystem`](https://resources.wolframcloud.com/FunctionRepository/resources/SequentialSubstitutionSystem/) (WFR) the evolution of a sequential substitution system, one replacement made per step at the first place a rule applies
 - [`PrioritizedSubstitutionSystem`](https://resources.wolframcloud.com/FunctionRepository/resources/PrioritizedSubstitutionSystem/) (WFR) the evolution of a substitution system whose replacements are taken in a given priority order
 - [`SymbolicSystem`](https://resources.wolframcloud.com/FunctionRepository/resources/SymbolicSystem/) (WFR) the evolution of a symbolic system, rules applied to a symbolic expression rather than a string
 - [`LSystem`](https://resources.wolframcloud.com/FunctionRepository/resources/LSystem/) (WFR) the string an L-system produces, its characters read as turtle instructions
 - `AnglePath` (WL) the path traced by a sequence of turns, the turtle reading of an L-system string
+- [`StringRewritingNormalForms`](https://www.wolframcloud.com/obj/wolframinstitute/DeployedResources/Paclet/WolframInstitute/PureMath/Documentation/ref/StringRewritingNormalForms.html) (WolframInstitute/PureMath) the normal forms reachable from a string under a string rewriting system, the irreducible strings found by breadth-first search over the one-step relation
+- [`StringRewritingCriticalPairs`](https://www.wolframcloud.com/obj/wolframinstitute/DeployedResources/Paclet/WolframInstitute/PureMath/Documentation/ref/StringRewritingCriticalPairs.html) (WolframInstitute/PureMath) the shortest words carrying two overlapping redexes, together with their two one-step reducts
+- [`StringRewritingConfluentQ`](https://www.wolframcloud.com/obj/wolframinstitute/DeployedResources/Paclet/WolframInstitute/PureMath/Documentation/ref/StringRewritingConfluentQ.html) (WolframInstitute/PureMath) whether a string rewriting system is confluent, decided by sound criteria on its critical pairs
 
 - `ThueMorse` (WL), `RudinShapiro` (WL), `Nest` (WL), `NestList` (WL), …
 
@@ -77,19 +90,21 @@ hypergraph rewriting or into a finite-state machine.
 - [`TagSystemRulePlot`](https://resources.wolframcloud.com/FunctionRepository/resources/TagSystemRulePlot/) (WFR) the rule icon of a tag system
 - [`CyclicTagSystem`](https://resources.wolframcloud.com/FunctionRepository/resources/CyclicTagSystem/) (WFR) the evolution of a cyclic tag system, whose rules are used in rotation
 - [`CyclicTagSystemEvolveList`](https://resources.wolframcloud.com/FunctionRepository/resources/CyclicTagSystemEvolveList/) (WFR) the successive states of a cyclic tag system evolution
-- [`PostTagSystem`](https://github.com/maxitg/PostTagSystem) (maxitg/PostTagSystem) the evolution of Post's tag system from a state given as a head and a tape, as an evolution object
-- [`PostTagSystemEvolution`](https://github.com/maxitg/PostTagSystem) (maxitg/PostTagSystem) that evolution object, queried by property for what the run produced
-- [`PostTagSystemFinalState`](https://github.com/maxitg/PostTagSystem) (maxitg/PostTagSystem) the state reached within a bounded number of events, or the short state reached first
-- [`GeneratePostTagSystemHistory`](https://github.com/maxitg/PostTagSystem) (maxitg/PostTagSystem) an association recording the evolution from an initial state, stopping at a bound or at a checkpoint state
-- [`GenerateTagSystemHistory`](https://github.com/maxitg/PostTagSystem) (maxitg/PostTagSystem) the same history for a named tag system other than Post's
+- [`PostTagSystem`](https://github.com/maxitg/PostTagSystem) (PostTagSystem) the evolution of Post's tag system from a state given as a head and a tape, as an evolution object
+- [`PostTagSystemEvolution`](https://github.com/maxitg/PostTagSystem) (PostTagSystem) that evolution object, queried by property for what the run produced
+- [`PostTagSystemFinalState`](https://github.com/maxitg/PostTagSystem) (PostTagSystem) the state reached within a bounded number of events, or the short state reached first
+- [`GeneratePostTagSystemHistory`](https://github.com/maxitg/PostTagSystem) (PostTagSystem) an association recording the evolution from an initial state, stopping at a bound or at a checkpoint state
+- [`GenerateTagSystemHistory`](https://github.com/maxitg/PostTagSystem) (PostTagSystem) the same history for a named tag system other than Post's
 
-- [`ToPackedTagSystemState`](https://github.com/maxitg/PostTagSystem) (maxitg/PostTagSystem), [`FromPackedTagSystemState`](https://github.com/maxitg/PostTagSystem) (maxitg/PostTagSystem), …
+- [`ToPackedTagSystemState`](https://github.com/maxitg/PostTagSystem) (PostTagSystem), [`FromPackedTagSystemState`](https://github.com/maxitg/PostTagSystem) (PostTagSystem), …
 
 ### Multiway and Causal Versions
 
 - [`MultiwaySystem`](https://resources.wolframcloud.com/FunctionRepository/resources/MultiwaySystem/) (WFR) the multiway system of a string substitution or cellular automaton rule, every applicable replacement followed as its own branch
 - `NestGraph` (WL) the graph of the states reached by iterating a step function, the multiway graph of any successor function
 - [`SubstitutionSystemCausalGraph`](https://resources.wolframcloud.com/FunctionRepository/resources/SubstitutionSystemCausalGraph/) (WFR) the causal graph of a string substitution system, its events the individual replacements
+- [`ApplyCARules`](https://github.com/WolframInstitute/Multicomputation/blob/master/Multicomputation/Kernel/LinkedHypergraph.m) (Wolfram/Multicomputation) cellular automaton rules applied to the linked hypergraph encoding of a cell array, one event per updated cell, the step behind a cellular automaton `Multi`
+- [`CAMulti`](https://github.com/WolframInstitute/Multicomputation/blob/master/Multicomputation/Kernel/LinkedHypergraph.m) (Wolfram/Multicomputation) a cellular automaton as a Multi object, its evolution followed as a multiway system
 
 ### Encoding One System as Another
 
@@ -111,13 +126,21 @@ hypergraph rewriting or into a finite-state machine.
 - [`MobileAutomatonRulePlot`](https://resources.wolframcloud.com/FunctionRepository/resources/MobileAutomatonRulePlot/) the rule icon of a mobile automaton
 - [`AggregationSystem`](https://resources.wolframcloud.com/FunctionRepository/resources/AggregationSystem/) a two-dimensional array grown by adding cells at random wherever the neighborhood matches
 - [`GenerateTiling`](https://resources.wolframcloud.com/FunctionRepository/resources/GenerateTiling/) a tiling pattern grown from a set of local template constraints
+- [`ArrayRotations`](https://resources.wolframcloud.com/FunctionRepository/resources/ArrayRotations/) the rotations and reflections of an array, the symmetry orbit of a two-dimensional pattern
+- [`ArrayCrop`](https://resources.wolframcloud.com/FunctionRepository/resources/ArrayCrop/) an array with its padding removed
+- [`StringGlocalMultiwaySystem`](https://resources.wolframcloud.com/FunctionRepository/resources/StringGlocalMultiwaySystem/) a string substitution system evolved as a glocal multiway system, global events over the individual tokens of a local one
+- [`ListGlocalMultiwaySystem`](https://resources.wolframcloud.com/FunctionRepository/resources/ListGlocalMultiwaySystem/) a list substitution system evolved as a glocal multiway system
+- [`SubstitutionSystemCausalEvolution`](https://resources.wolframcloud.com/FunctionRepository/resources/SubstitutionSystemCausalEvolution/) the evolution of a substitution system together with its causal structure, under a forward, backward, first or random updating scheme
+- [`SubstitutionSystemCausalPlot`](https://resources.wolframcloud.com/FunctionRepository/resources/SubstitutionSystemCausalPlot/) a plot of the causal features of a substitution system evolution
+- [`StringTuples`](https://resources.wolframcloud.com/FunctionRepository/resources/StringTuples/) all tuples of characters from a string, enumerating the initial conditions of a string substitution system
+- [`EnumerateRuleSignatures`](https://resources.wolframcloud.com/FunctionRepository/resources/EnumerateRuleSignatures/) the possible rule signatures for substitution systems and Wolfram models with a given number of elements
 
 - [`FindMinimalTilings`](https://resources.wolframcloud.com/FunctionRepository/resources/FindMinimalTilings/), [`CanonicalTilingMask`](https://resources.wolframcloud.com/FunctionRepository/resources/CanonicalTilingMask/), [`TilingPatternPlot`](https://resources.wolframcloud.com/FunctionRepository/resources/TilingPatternPlot/), [`GenerateHexagonalWangTiling`](https://resources.wolframcloud.com/FunctionRepository/resources/GenerateHexagonalWangTiling/), [`AlgebraicSubstitutionTiling`](https://resources.wolframcloud.com/FunctionRepository/resources/AlgebraicSubstitutionTiling/), [`PeriodicPatternGenerator`](https://resources.wolframcloud.com/FunctionRepository/resources/PeriodicPatternGenerator/), [`DynamicCellularAutomaton`](https://resources.wolframcloud.com/FunctionRepository/resources/DynamicCellularAutomaton/), [`DynamicCASelector`](https://resources.wolframcloud.com/FunctionRepository/resources/DynamicCASelector/), [`RandomCA`](https://resources.wolframcloud.com/FunctionRepository/resources/RandomCA/), [`SequentialSubstitutionSystemRulePlot`](https://resources.wolframcloud.com/FunctionRepository/resources/SequentialSubstitutionSystemRulePlot/), [`TagSystemConvert`](https://resources.wolframcloud.com/FunctionRepository/resources/TagSystemConvert/), [`PerturbedCellularAutomaton`](https://resources.wolframcloud.com/FunctionRepository/resources/PerturbedCellularAutomaton/), [`AdaptiveCellularAutomaton`](https://resources.wolframcloud.com/FunctionRepository/resources/AdaptiveCellularAutomaton/), [`IsingModelCA`](https://resources.wolframcloud.com/FunctionRepository/resources/IsingModelCA/), [`BusyBoxesAutomaton`](https://resources.wolframcloud.com/FunctionRepository/resources/BusyBoxesAutomaton/), [`MobileAutomatonNonlocal`](https://resources.wolframcloud.com/FunctionRepository/resources/MobileAutomatonNonlocal/), [`MultiwayAggregationSystem`](https://resources.wolframcloud.com/FunctionRepository/resources/MultiwayAggregationSystem/), [`GenerateWangTiling`](https://resources.wolframcloud.com/FunctionRepository/resources/GenerateWangTiling/), …
 
 ### Writings
 
 - [Post tag system program file](https://www.wolframcloud.com/obj/sw-blog/PostTagSystem/Programs-01.wl) the package accompanying the Post tag system bulletin, holding the functions below
-- [`TSEvolveList`](https://www.wolframcloud.com/obj/sw-blog/PostTagSystem/Programs-01.wl) the successive states of an n-tag system evolution under given replacement rules
+- [`TSEvolveList`](https://www.wolframcloud.com/obj/sw-blog/PostTagSystem/Programs-01.wl) the successive states of an n-tag system evolution under given replacement rules, the published [`TagSystemEvolveList`](https://resources.wolframcloud.com/FunctionRepository/resources/TagSystemEvolveList/) covers it
 - [`TSGenerationEvolveList`](https://www.wolframcloud.com/obj/sw-blog/PostTagSystem/Programs-01.wl) the states of the Post tag system by generations, one generation processing the whole current state
 - [`FindPostTagFate`](https://www.wolframcloud.com/obj/sw-blog/PostTagSystem/Programs-01.wl) whether an initial condition halts, falls into a cycle or grows
 - [`FindPostTagDetails`](https://www.wolframcloud.com/obj/sw-blog/PostTagSystem/Programs-01.wl) the event count and the cycle details of a Post tag evolution
@@ -169,5 +192,11 @@ hypergraph rewriting or into a finite-state machine.
 - [Mobile automata with non-local rules](https://community.wolfram.com/t/24263) mobile automata whose active cell jumps to a distant position
 - [Aggregation Systems: A stochastic approach to CA](https://community.wolfram.com/t/14354) aggregation systems run as cellular automata with a random component in a totalistic rule
 - [Efficient discovery of halting paths in aggregation system multiway graphs](https://community.wolfram.com/t/22401) halting paths found in the multiway graph of a totalistic aggregation system
+- [Multiway circular-string rewrite systems](https://community.wolfram.com/t/16379) string rewriting on circular strings, evolved as multiway systems in search of oscillating behavior and of a causal edge flux standing for energy
+- [Exploring statistical mechanics in string substitution systems](https://community.wolfram.com/t/16368) the correspondence between statistical mechanics and multiway string substitution systems
+- [Multi-way tag systems in coordinatized rulial space](https://community.wolfram.com/t/20348) tag systems of a rule space run together and placed in rulial coordinates
+- [Compiling from a Turing machine to a cyclic tag system](https://community.wolfram.com/t/24633) a Turing machine compiled step by step into a cyclic tag system
+- [Quantum teleportation in string substitution systems](https://community.wolfram.com/t/16348) quantum teleportation modeled in the multiway system of a string substitution system
+- [The Ruliology of Network Mobile Automata](https://community.wolfram.com/t/22389) the rule space of network mobile automata enumerated in canonical form and surveyed by behavior
 
 - [On chaos in aggregation systems](https://community.wolfram.com/t/24279), [Building blocks' aggregation systems](https://community.wolfram.com/t/24222), [Analyzing terminating behaviors of triangular aggregations using multiway systems](https://community.wolfram.com/t/25745), [Multi-way tag systems with symbolic rewriting, voxel transitions, and non-deterministic state graphs](https://community.wolfram.com/t/25373), [Analysis of multiway sequential cellular automata: class evolution and quad flex case](https://community.wolfram.com/t/25067), [Cyclic string substitution and multiway systems](https://community.wolfram.com/t/16412), [Multi-way Tiling Systems](https://community.wolfram.com/t/18427), [Multiway sandpile models with applications to LCFTs](https://community.wolfram.com/t/20387), [On the density and multiway spectral theory of aggregation systems](https://community.wolfram.com/t/25762), [Exploring neighbor dependent substitution systems using cluster size entropy and MSD](https://community.wolfram.com/t/22388), …
